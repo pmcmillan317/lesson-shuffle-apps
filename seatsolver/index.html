@@ -26,6 +26,8 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-500-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/js/site.js"></script>
 </head>
@@ -47,11 +49,11 @@
         <div class="menu-panel">
           <ul class="menu-list wrap" role="list">
             <li><a href="/">All tools</a></li>
+            <li><a class="suit-blue" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-green" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-red" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-yellow" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li><a class="suit-blue" href="/seatsolver/" aria-current="page"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
-            <li><a class="suit-green" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
-            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
-            <li><a class="suit-yellow" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
-            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li class="menu-sep" aria-hidden="true"></li>
             <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
           </ul>
@@ -61,6 +63,12 @@
   </div>
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </header>
+
+<nav class="crumb" aria-label="Back to all tools">
+  <div class="wrap narrow">
+    <a href="/">&larr; All tools</a>
+  </div>
+</nav>
 
 <main id="main" class="page">
   <div class="wrap narrow prose">
@@ -160,10 +168,10 @@
     <div class="more-tools">
       <h2 id="more-tools">More Lesson Shuffle tools</h2>
       <ul class="more-list" role="list">
-        <li><a class="suit-green" href="/visual-timer/"><img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="" loading="lazy"><span>Visual Timer</span></a></li>
-        <li><a class="suit-red" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
-        <li><a class="suit-yellow" href="/polyread/"><img src="/assets/icons/polyread.webp" width="128" height="128" alt="" loading="lazy"><span>PolyRead</span></a></li>
-        <li><a class="suit-blue" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
+        <li><a class="suit-blue" href="/visual-timer/"><img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="" loading="lazy"><span>Visual Timer</span></a></li>
+        <li><a class="suit-green" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
+        <li><a class="suit-red" href="/polyread/"><img src="/assets/icons/polyread.webp" width="128" height="128" alt="" loading="lazy"><span>PolyRead</span></a></li>
+        <li><a class="suit-yellow" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
       </ul>
     </div>
   </div>
@@ -172,16 +180,19 @@
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <div class="footer-brand">
+      <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+      <p class="tagline">Shuffle. Pick. Grow.</p>
+    </div>
     <nav aria-label="Lesson Shuffle tools">
       <p class="label">Tools</p>
       <ul class="two-col">
         <li><a href="/">All tools</a></li>
-        <li><a href="/seatsolver/">SeatSolver</a></li>
         <li><a href="/visual-timer/">Visual Timer</a></li>
         <li><a href="/webink/">WebInk</a></li>
         <li><a href="/polyread/">PolyRead</a></li>
         <li><a href="/bell-schedule/">Bell Schedule</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
       </ul>
     </nav>
     <nav aria-label="SeatSolver legal pages">
@@ -194,6 +205,7 @@
   </div>
   <div class="wrap footer-base">
     <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
+    <p class="made">Made by the teacher behind the Lesson Shuffle strategy cards. <a href="https://lessonshuffle.com/#deck">See the deck</a></p>
   </div>
 </footer>
 </body>

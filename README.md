@@ -2,7 +2,7 @@
 
 The tools hub for Lesson Shuffle. A small static site, served by Cloudflare Pages straight from the repo root. No build step, no cookies, no analytics, no forms, no external requests (fonts and images are self-hosted, and `_headers` sets a strict Content-Security-Policy). One small script, `assets/js/site.js`, closes the phone menu and fades sections in as they scroll into view. Every page works without it.
 
-It has one page listing every tool (`/`), a help page for each tool, and the SeatSolver privacy policy and terms of service. The Chrome extensions' privacy and terms pages live on lessonshuffle.com and stay there. The look matches lessonshuffle.com.
+It has one page listing every tool (`/`), a help page for each tool, and the SeatSolver privacy policy and terms of service. Each Chrome extension's privacy policy lives here too, at `/<slug>/privacy/`. The old `lessonshuffle.com/extensions/` addresses redirect here. The extensions have no terms page, so link only to their privacy policy, never to a terms page. SeatSolver keeps its terms page, because the Google Workspace Marketplace needs one. The look matches lessonshuffle.com.
 
 ## Files
 
@@ -12,10 +12,12 @@ It has one page listing every tool (`/`), a help page for each tool, and the Sea
 | `seatsolver/index.html` | SeatSolver help page (`/seatsolver/`, and `/seatsolver` redirects to it). |
 | `seatsolver-privacy/index.html`, `seatsolver-terms/index.html` | SeatSolver privacy policy and terms of service. |
 | `visual-timer/`, `webink/`, `polyread/`, `bell-schedule/` | One help page per Chrome extension (`index.html` in each). |
+| `visual-timer/privacy/`, `webink/privacy/`, `polyread/privacy/`, `bell-schedule/privacy/` | The extensions' privacy policies. This is legal text (Bell Schedule's page also holds its terms). |
 | `404.html` | Not-found page. Cloudflare Pages serves it, with a 404 status, for any unknown address. |
 | `style.css` | All styles. Colour and spacing tokens are in `:root` at the top (light and dark). |
 | `assets/js/site.js` | The only script: phone menu closing, reveal on scroll. Adds a `js` class to `<html>`. |
 | `assets/icons/` | The four extension icons (128px webp). SeatSolver uses `/seatsolver-icon.png`. |
+| `assets/shots/` | One store screenshot per tool page (`<slug>-1.webp`, 1280 wide, under 150 KB). The full-size originals are kept in `2 BrandStore Screenshots`. |
 | `assets/` | Header and footer logos, `og-image.png` (social preview), `apple-touch-icon.png`. |
 | `fonts/` | Days One and Rubik (woff2) with their OFL licences. |
 | `favicon.svg`, `favicon.ico`, `favicon.png` | Site icon (card fan). Pages link the `.ico`, the `.svg` and the apple-touch icon. |
@@ -25,20 +27,21 @@ It has one page listing every tool (`/`), a help page for each tool, and the Sea
 
 ## Rules
 
-1. **Do not change or remove any existing URL.** The Google Workspace add-on submission links to `/seatsolver/`, `/seatsolver-privacy/` and `/seatsolver-terms/`, and Google consoles may use `/favicon.png`, `/ls-logo.png`, `/seatsolver-icon.png` and `/style.css`. If a page ever has to move, leave a redirect behind.
+1. **Do not change or remove any existing URL.** The Google Workspace add-on submission links to `/seatsolver/`, `/seatsolver-privacy/` and `/seatsolver-terms/`. The Chrome Web Store listings link to `/visual-timer/privacy/`, `/webink/privacy/`, `/polyread/privacy/` and `/bell-schedule/privacy/`. Google consoles may use `/favicon.png`, `/ls-logo.png`, `/seatsolver-icon.png` and `/style.css`. If a page ever has to move, leave a redirect behind. These addresses must never move without one.
 2. **The SeatSolver text must not change.** The words inside `<main>` on `/seatsolver/`, `/seatsolver-privacy/` and `/seatsolver-terms/` are what Google reviewed. Header, footer, markup, classes and styling around them may change. If a wording change is ever requested, make exactly that change, update the "Effective date" line on a legal page, and tell the owner that the Google listing may need a re-review. To prove nothing moved, compare the visible `<main>` text of each page with `git show main:<path>` (ignoring whitespace and entities).
-3. **No inline `style=""` attributes, no inline `<script>`, and nothing loaded from another site.** The CSP in `_headers` blocks them. The only script is `/assets/js/site.js`. Put styling in `style.css`.
-4. **Copy voice for new text:** plain and warm, short sentences for busy teachers, no em dashes or en dashes, no invented facts, prices, dates or statistics. Tool help pages say only what is verified in the extension's own code and listing. If a store listing or legal page claims more than the code does, use the weaker, accurate wording.
-5. **Never mention or link to the Lesson Shuffle card guide site.** It is a perk for deck buyers and stays off this site. (Note that every file in the repo root is publicly served, this README included.)
-6. Keep tap targets at least 44px, body text at least 16px, and check dark mode as well as light. The header must stay on one row at 320px wide and with text enlarged to 150 percent.
+3. **The four extension privacy pages are legal text too.** Do not reword them without the owner's OK. If a change is approved, make exactly that change, update the "Last updated" line on that page, and tell the owner that the Chrome Web Store listing may need a re-review. Their `<main>` text was carried over word for word from the old lessonshuffle.com pages; only the links bar at the bottom changed.
+4. **No inline `style=""` attributes, no inline `<script>`, and nothing loaded from another site.** The CSP in `_headers` blocks them. The only script is `/assets/js/site.js`. Put styling in `style.css`.
+5. **Copy voice for new text:** plain and warm, short sentences for busy teachers, no em dashes or en dashes, no invented facts, prices, dates or statistics. Tool help pages say only what is verified in the extension's own code and listing. If a store listing or legal page claims more than the code does, use the weaker, accurate wording.
+6. **Never mention or link to the Lesson Shuffle card guide site.** It is a perk for deck buyers and stays off this site. (Note that every file in the repo root is publicly served, this README included.)
+7. Keep tap targets at least 44px, body text at least 16px, and check dark mode as well as light. The header must stay on one row at 320px wide and with text enlarged to 150 percent.
 
 When the SeatSolver Marketplace listing goes live, replace the placeholder sentence on the SeatSolver page with the real link (this is the one allowed text change there), and remove the "Marketplace listing coming soon" pill from the hub tile.
 
 ## How to add a tool
 
 1. Copy an existing tool page, for example `webink/index.html`, to `<slug>/index.html`. Change the title, description, canonical, Open Graph and Twitter tags, the icon, the `suit-` colour class on `app-head`, the store link and the legal links. Rewrite the sections from verified facts only: Get started, Using it, Something not working?, Frequently asked questions, Your privacy in plain words, Contact and More Lesson Shuffle tools.
-2. Put a 128px icon in `assets/icons/<slug>.webp`.
-3. Add a tile to the grid in `index.html` (copy a `<li class="reveal ...">` block) with the one-line description, "Learn more" and, for a Chrome extension, "Get it on Chrome" (keep the hidden "(opens in a new tab)" text).
+2. Put a 128px icon in `assets/icons/<slug>.webp`. For a screenshot under the page hero, convert one of the owner's own store images to `assets/shots/<slug>-1.webp` and give it real alt text, `width` and `height`. Only use an image that shows the current look of that tool.
+3. Add a tile to the grid in `index.html` (copy a `<li class="reveal ...">` block) with the one-line description, "Get it on Chrome" (the filled button, for a Chrome extension) and "Learn more" (keep the hidden "(opens in a new tab)" text). SeatSolver stays last in every list until its Marketplace listing is live. On a tool page each FAQ question is a native `<details><summary>`; keep it closed by default and keep the answer in the HTML.
 4. Add the tool to the phone menu (`<details class="menu">`) and the "Tools" list in the footer on **every** page, to the "More Lesson Shuffle tools" row on every tool page, and to `sitemap.xml`.
 5. Run the checks below.
 

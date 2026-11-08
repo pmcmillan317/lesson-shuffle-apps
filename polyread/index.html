@@ -26,6 +26,8 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-500-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/js/site.js"></script>
 </head>
@@ -47,11 +49,11 @@
         <div class="menu-panel">
           <ul class="menu-list wrap" role="list">
             <li><a href="/">All tools</a></li>
+            <li><a class="suit-blue" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-green" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-red" href="/polyread/" aria-current="page"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-yellow" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li><a class="suit-blue" href="/seatsolver/"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
-            <li><a class="suit-green" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
-            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
-            <li><a class="suit-yellow" href="/polyread/" aria-current="page"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
-            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li class="menu-sep" aria-hidden="true"></li>
             <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
           </ul>
@@ -62,9 +64,15 @@
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </header>
 
+<nav class="crumb" aria-label="Back to all tools">
+  <div class="wrap narrow">
+    <a href="/">&larr; All tools</a>
+  </div>
+</nav>
+
 <main id="main" class="page">
   <div class="wrap narrow prose">
-    <div class="app-head suit-yellow">
+    <div class="app-head suit-red">
       <img src="/assets/icons/polyread.webp" width="128" height="128" alt="">
       <div>
         <h1>PolyRead by Lesson Shuffle</h1>
@@ -74,9 +82,21 @@
     <p class="lead-in">PolyRead reads the text you select out loud. It lights up each sentence and word as it goes. It is made for multilingual learners and for students who need text read aloud, with Chromebooks in mind.</p>
     <div class="cta-row">
       <a class="btn btn-main" href="https://chromewebstore.google.com/detail/polyread-by-lesson-shuffl/encenjhdcpfpjlhgllkgddmlnokoedgn" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> (opens in a new tab)</span></a>
-      <p class="legal-links"><a href="https://lessonshuffle.com/extensions/polyread/privacy/">Privacy policy</a> &middot; <a href="https://lessonshuffle.com/extensions/polyread/terms/">Terms of use</a></p>
+      <p class="legal-links"><a href="/polyread/privacy/">Privacy policy</a></p>
     </div>
-    <p>Made by Patrick McMillan, Lesson Shuffle.</p>
+    <p>Instruction first, tool second. Made by Patrick McMillan, a teacher.</p>
+    <nav class="jump" aria-label="On this page">
+      <ul role="list">
+        <li><a href="#get-started">Get started</a></li>
+        <li><a href="#using-it">Using it</a></li>
+        <li><a href="#trouble">Something not working?</a></li>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="#privacy">Your privacy</a></li>
+      </ul>
+    </nav>
+    <figure class="shot">
+      <img src="/assets/shots/polyread-1.webp" width="1280" height="800" alt="The PolyRead toolbar above a paragraph about the water cycle. The toolbar has EN, ES and FR buttons, Play, Pause, Repeat, Next and Stop buttons, and a speed slider. One sentence and one word are highlighted as they are read." loading="lazy">
+    </figure>
 
     <section aria-labelledby="get-started">
       <h2 class="reveal" id="get-started">Get started</h2>
@@ -145,34 +165,26 @@
 
     <section aria-labelledby="faq">
       <h2 class="reveal" id="faq">Frequently asked questions</h2>
-      <div class="qa reveal">
-        <h3>Does PolyRead send my text to Lesson Shuffle?</h3>
-        <p>No.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Does the text leave my device?</h3>
-        <p>Only if the voice is an online one. The voice comes from your browser or device, not from PolyRead. Online voices, like Google&rsquo;s voices in Chrome, send the text to that voice provider. Turn on &ldquo;Keep text on this Chromebook&rdquo; and leave the voices on Auto to keep text on your device as much as possible.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Does it work offline?</h3>
-        <p>It can. Turn on &ldquo;Keep text on this Chromebook&rdquo; and leave the voices on Auto. PolyRead then prefers on-device voices, which work offline but may sound less natural.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Which languages does it read?</h3>
-        <p>English, Spanish and French only.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Does it run on every page by itself?</h3>
-        <p>No. It only runs after you click its icon.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Do my settings follow me to another computer?</h3>
-        <p>No. Your settings are saved in each Chrome profile, on that computer. PolyRead does not save the text it reads.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Are there ads?</h3>
-        <p>No. PolyRead is ad-free.</p>
-      </div>
+      <details class="qa reveal">
+        <summary><h3>Does it work offline?</h3></summary>
+        <div class="qa-body"><p>It can. Turn on &ldquo;Keep text on this Chromebook&rdquo; and leave the voices on Auto. PolyRead then prefers on-device voices, which work offline but may sound less natural.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Which languages does it read?</h3></summary>
+        <div class="qa-body"><p>English, Spanish and French only.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Does it run on every page by itself?</h3></summary>
+        <div class="qa-body"><p>No. It only runs after you click its icon.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Do my settings follow me to another computer?</h3></summary>
+        <div class="qa-body"><p>No. Your settings are saved in each Chrome profile, on that computer. PolyRead does not save the text it reads.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Are there ads?</h3></summary>
+        <div class="qa-body"><p>No. PolyRead is ad-free.</p></div>
+      </details>
     </section>
 
     <section aria-labelledby="privacy">
@@ -184,7 +196,7 @@
         <li>To keep text on your device as much as possible, turn on &ldquo;Keep text on this Chromebook&rdquo; and leave the voices on Auto. PolyRead then prefers on-device voices. This is a preference, not a guarantee: a voice you pick yourself that needs internet, or a language with no on-device voice, can still send the text to an online provider.</li>
         <li>Chrome permissions: <b>activeTab</b> runs PolyRead only after you click the icon, <b>scripting</b> adds the toolbar and highlights, and <b>storage</b> saves your settings.</li>
       </ul>
-      <p>Read the <a href="https://lessonshuffle.com/extensions/polyread/privacy/">full privacy policy</a> and <a href="https://lessonshuffle.com/extensions/polyread/terms/">terms of use</a>.</p>
+      <p>Read the <a href="/polyread/privacy/">full privacy policy</a>.</p>
     </section>
 
     <section aria-labelledby="contact">
@@ -197,10 +209,10 @@
     <section class="more-tools" aria-labelledby="more-tools">
       <h2 class="reveal" id="more-tools">More Lesson Shuffle tools</h2>
       <ul class="more-list" role="list">
+        <li><a class="suit-blue" href="/visual-timer/"><img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="" loading="lazy"><span>Visual Timer</span></a></li>
+        <li><a class="suit-green" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
+        <li><a class="suit-yellow" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
         <li><a class="suit-blue" href="/seatsolver/"><img src="/seatsolver-icon.png" width="128" height="128" alt="" loading="lazy"><span>SeatSolver</span></a></li>
-        <li><a class="suit-green" href="/visual-timer/"><img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="" loading="lazy"><span>Visual Timer</span></a></li>
-        <li><a class="suit-red" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
-        <li><a class="suit-blue" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
       </ul>
       <p><a class="btn btn-ghost btn-sm" href="/">See all tools</a></p>
     </section>
@@ -210,16 +222,19 @@
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <div class="footer-brand">
+      <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+      <p class="tagline">Shuffle. Pick. Grow.</p>
+    </div>
     <nav aria-label="Lesson Shuffle tools">
       <p class="label">Tools</p>
       <ul class="two-col">
         <li><a href="/">All tools</a></li>
-        <li><a href="/seatsolver/">SeatSolver</a></li>
         <li><a href="/visual-timer/">Visual Timer</a></li>
         <li><a href="/webink/">WebInk</a></li>
         <li><a href="/polyread/">PolyRead</a></li>
         <li><a href="/bell-schedule/">Bell Schedule</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
       </ul>
     </nav>
     <nav aria-label="SeatSolver legal pages">
@@ -232,6 +247,7 @@
   </div>
   <div class="wrap footer-base">
     <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
+    <p class="made">Made by the teacher behind the Lesson Shuffle strategy cards. <a href="https://lessonshuffle.com/#deck">See the deck</a></p>
   </div>
 </footer>
 </body>

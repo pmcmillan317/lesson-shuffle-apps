@@ -26,6 +26,8 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-500-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/js/site.js"></script>
 </head>
@@ -47,11 +49,11 @@
         <div class="menu-panel">
           <ul class="menu-list wrap" role="list">
             <li><a href="/">All tools</a></li>
+            <li><a class="suit-blue" href="/visual-timer/" aria-current="page"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-green" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-red" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-yellow" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li><a class="suit-blue" href="/seatsolver/"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
-            <li><a class="suit-green" href="/visual-timer/" aria-current="page"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
-            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
-            <li><a class="suit-yellow" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
-            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
             <li class="menu-sep" aria-hidden="true"></li>
             <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
           </ul>
@@ -62,9 +64,15 @@
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </header>
 
+<nav class="crumb" aria-label="Back to all tools">
+  <div class="wrap narrow">
+    <a href="/">&larr; All tools</a>
+  </div>
+</nav>
+
 <main id="main" class="page">
   <div class="wrap narrow prose">
-    <div class="app-head suit-green">
+    <div class="app-head suit-blue">
       <img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="">
       <div>
         <h1>Visual Timer by Lesson Shuffle</h1>
@@ -74,9 +82,21 @@
     <p class="lead-in">Visual Timer shows a countdown with a colored ring that shrinks as time runs out. Pick a time, press Start and watch the ring. It is free, it has no ads, and it is made for teachers.</p>
     <div class="cta-row">
       <a class="btn btn-main" href="https://chromewebstore.google.com/detail/visual-timer-by-lesson-sh/iblmcfdoeefpabfcfjgigmaoomcbekcm" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> (opens in a new tab)</span></a>
-      <p class="legal-links"><a href="https://lessonshuffle.com/extensions/visual-timer/privacy/">Privacy policy</a> &middot; <a href="https://lessonshuffle.com/extensions/visual-timer/terms/">Terms of use</a></p>
+      <p class="legal-links"><a href="/visual-timer/privacy/">Privacy policy</a></p>
     </div>
-    <p>Made by Patrick McMillan, Lesson Shuffle.</p>
+    <p>Instruction first, tool second. Made by Patrick McMillan, a teacher.</p>
+    <nav class="jump" aria-label="On this page">
+      <ul role="list">
+        <li><a href="#get-started">Get started</a></li>
+        <li><a href="#using-it">Using it</a></li>
+        <li><a href="#trouble">Something not working?</a></li>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="#privacy">Your privacy</a></li>
+      </ul>
+    </nav>
+    <figure class="shot">
+      <img src="/assets/shots/visual-timer-1.webp" width="1280" height="800" alt="The Visual Timer on a slide: a green ring around the time 07:17, with an eye button above the numbers, a pause button below them, a close button at the top right and a resize handle at the bottom right." loading="lazy">
+    </figure>
 
     <section aria-labelledby="get-started">
       <h2 class="reveal" id="get-started">Get started</h2>
@@ -155,38 +175,34 @@
 
     <section aria-labelledby="faq">
       <h2 class="reveal" id="faq">Frequently asked questions</h2>
-      <div class="qa reveal">
-        <h3>Does it work over full-screen Google Slides?</h3>
-        <p>Yes. Use the <b>Timer</b> tab or the keyboard shortcuts.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Does it work in Canva?</h3>
-        <p>Yes, on Canva design pages. The single-letter keys work in Google Slides only.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Can I set an exact time, like 45 seconds?</h3>
-        <p>Yes. Type 0:45 in the custom box and press <b>Start</b>.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Can I use my own alert sound?</h3>
-        <p>Yes. You can add up to three of your own clips in Settings.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>What happens if I reload or close the tab?</h3>
-        <p>The timer ends. It lives in one tab, and nothing is saved while it is running.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Can I hide the numbers?</h3>
-        <p>Yes. Press the eye button (<b>Hide the numbers</b>).</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Does it collect my data?</h3>
-        <p>No. Visual Timer makes no network requests. Your settings are saved in Chrome&rsquo;s extension storage, and Chrome Sync may copy some of them to your Google account.</p>
-      </div>
-      <div class="qa reveal">
-        <h3>Is Visual Timer free?</h3>
-        <p>Yes, it is free. The Chrome Web Store listing also calls it ad-free.</p>
-      </div>
+      <details class="qa reveal">
+        <summary><h3>Does it work over full-screen Google Slides?</h3></summary>
+        <div class="qa-body"><p>Yes. Use the <b>Timer</b> tab or the keyboard shortcuts.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Does it work in Canva?</h3></summary>
+        <div class="qa-body"><p>Yes, on Canva design pages. The single-letter keys work in Google Slides only.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Can I set an exact time, like 45 seconds?</h3></summary>
+        <div class="qa-body"><p>Yes. Type 0:45 in the custom box and press <b>Start</b>.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Can I use my own alert sound?</h3></summary>
+        <div class="qa-body"><p>Yes. You can add up to three of your own clips in Settings.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>What happens if I reload or close the tab?</h3></summary>
+        <div class="qa-body"><p>The timer ends. It lives in one tab, and nothing is saved while it is running.</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Can I hide the numbers?</h3></summary>
+        <div class="qa-body"><p>Yes. Press the eye button (<b>Hide the numbers</b>).</p></div>
+      </details>
+      <details class="qa reveal">
+        <summary><h3>Is Visual Timer free?</h3></summary>
+        <div class="qa-body"><p>Yes, it is free. The Chrome Web Store listing also calls it ad-free.</p></div>
+      </details>
     </section>
 
     <section aria-labelledby="privacy">
@@ -198,7 +214,7 @@
         <li>On Google Slides and Canva, the timer only checks whether the page is full screen and part of the web address. On Slides it also listens for its shortcut keys. It never reads or stores your slides.</li>
         <li>Chrome permissions: <b>activeTab</b> lets it run on the tab you choose, <b>scripting</b> places the timer there, and <b>storage</b> saves your settings. It also has access to Google Slides and Canva pages so the Timer tab and keys are ready without a click.</li>
       </ul>
-      <p>Read the <a href="https://lessonshuffle.com/extensions/visual-timer/privacy/">full privacy policy</a> and <a href="https://lessonshuffle.com/extensions/visual-timer/terms/">terms of use</a>.</p>
+      <p>Read the <a href="/visual-timer/privacy/">full privacy policy</a>.</p>
     </section>
 
     <section aria-labelledby="contact">
@@ -211,10 +227,10 @@
     <section class="more-tools" aria-labelledby="more-tools">
       <h2 class="reveal" id="more-tools">More Lesson Shuffle tools</h2>
       <ul class="more-list" role="list">
+        <li><a class="suit-green" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
+        <li><a class="suit-red" href="/polyread/"><img src="/assets/icons/polyread.webp" width="128" height="128" alt="" loading="lazy"><span>PolyRead</span></a></li>
+        <li><a class="suit-yellow" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
         <li><a class="suit-blue" href="/seatsolver/"><img src="/seatsolver-icon.png" width="128" height="128" alt="" loading="lazy"><span>SeatSolver</span></a></li>
-        <li><a class="suit-red" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
-        <li><a class="suit-yellow" href="/polyread/"><img src="/assets/icons/polyread.webp" width="128" height="128" alt="" loading="lazy"><span>PolyRead</span></a></li>
-        <li><a class="suit-blue" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
       </ul>
       <p><a class="btn btn-ghost btn-sm" href="/">See all tools</a></p>
     </section>
@@ -224,16 +240,19 @@
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <div class="footer-brand">
+      <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+      <p class="tagline">Shuffle. Pick. Grow.</p>
+    </div>
     <nav aria-label="Lesson Shuffle tools">
       <p class="label">Tools</p>
       <ul class="two-col">
         <li><a href="/">All tools</a></li>
-        <li><a href="/seatsolver/">SeatSolver</a></li>
         <li><a href="/visual-timer/">Visual Timer</a></li>
         <li><a href="/webink/">WebInk</a></li>
         <li><a href="/polyread/">PolyRead</a></li>
         <li><a href="/bell-schedule/">Bell Schedule</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
       </ul>
     </nav>
     <nav aria-label="SeatSolver legal pages">
@@ -246,6 +265,7 @@
   </div>
   <div class="wrap footer-base">
     <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
+    <p class="made">Made by the teacher behind the Lesson Shuffle strategy cards. <a href="https://lessonshuffle.com/#deck">See the deck</a></p>
   </div>
 </footer>
 </body>

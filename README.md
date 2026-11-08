@@ -2,7 +2,7 @@
 
 The tools hub for Lesson Shuffle. A small static site, served by Cloudflare Pages straight from the repo root. No build step, no cookies, no analytics, no forms, no external requests (fonts and images are self-hosted, and `_headers` sets a strict Content-Security-Policy). One small script, `assets/js/site.js`, closes the phone menu and fades sections in as they scroll into view. Every page works without it.
 
-It has one page listing every tool (`/`), a help page for each tool, and the SeatSolver privacy policy and terms of service. Each Chrome extension's privacy policy lives here too, at `/<slug>/privacy/`. The old `lessonshuffle.com/extensions/` addresses redirect here. The extensions have no terms page, so link only to their privacy policy, never to a terms page. SeatSolver keeps its terms page, because the Google Workspace Marketplace needs one. The look matches lessonshuffle.com.
+It has one page listing every tool (`/`), a help page for each tool, and the SeatSolver privacy policy and terms of service. Each Chrome extension's privacy policy lives here too, at `/<slug>/privacy/`. The old `lessonshuffle.com/extensions/` addresses redirect here. The extensions have no terms page, so link only to their privacy policy, never to a terms page. SeatSolver keeps its terms page, because the Google Workspace Marketplace needs one. The look matches lessonshuffle.com and uses the Logo v2 brand kit: the four staggered cards of the logo, navy bands with the dark logo (the hub hero and the footer), a row of four suit-colour tabs (`.tabs`) along the hero's bottom and the footer's top edge, and solid suit-colour cards with a white "cut line" border (navy on dark mode) for the tool tiles and the tool page banner.
 
 ## Files
 
@@ -14,15 +14,16 @@ It has one page listing every tool (`/`), a help page for each tool, and the Sea
 | `visual-timer/`, `webink/`, `polyread/`, `bell-schedule/` | One help page per Chrome extension (`index.html` in each). |
 | `visual-timer/privacy/`, `webink/privacy/`, `polyread/privacy/`, `bell-schedule/privacy/` | The extensions' privacy policies. This is legal text (Bell Schedule's page also holds its terms). |
 | `404.html` | Not-found page. Cloudflare Pages serves it, with a 404 status, for any unknown address. |
-| `style.css` | All styles. Colour and spacing tokens are in `:root` at the top (light and dark). |
+| `style.css` | All styles. Colour and spacing tokens are in `:root` at the top (light and dark): the suit colours, `--navy`, `--cut` (the cut line colour) and `--ink-on-suit`. The header is a size container, so it swaps the horizontal logo for the icon on very narrow or enlarged-text phones and always stays on one row. |
 | `assets/js/site.js` | The only script: phone menu closing, reveal on scroll. Adds a `js` class to `<html>`. |
 | `assets/icons/` | The four extension icons (128px webp). SeatSolver uses `/seatsolver-icon.png`. |
 | `assets/shots/` | One store screenshot per tool page (`<slug>-1.webp`, 1280 wide, under 150 KB). The full-size originals are kept in `2 BrandStore Screenshots`. |
-| `assets/` | Header and footer logos, `og-image.png` (social preview), `apple-touch-icon.png`. |
+| `assets/brand/` | The Logo v2 SVGs, the same files as on lessonshuffle.com: `logo-horizontal-light.svg` and `logo-horizontal-dark.svg` (header and footer), `icon.svg` (header on very narrow phones, the hub hero and the 404 page), `logo-primary-light.svg` and `logo-primary-dark.svg` (not used on a page yet; the dark one is what `og-image.png` was made from). Use them as they are: never stretch, recolour or re-type them, put the dark versions on navy only, keep the horizontal logo at least 120px wide on screen, and leave clear space around it. The header swaps light and dark with `<picture>` and `prefers-color-scheme`. |
+| `assets/` | `og-image.png` (1200x630 social preview: navy, the dark primary logo and four suit tabs, the same image as lessonshuffle.com) and `apple-touch-icon.png` (Logo v2 icon, 180px). |
 | `fonts/` | Days One and Rubik (woff2) with their OFL licences. |
-| `favicon.svg`, `favicon.ico`, `favicon.png` | Site icon (card fan). Pages link the `.ico`, the `.svg` and the apple-touch icon. |
-| `ls-logo.png`, `seatsolver-icon.png` | Original images. Do not rename, move or change them. They may be referenced from Google consoles. `ls-logo.png` is no longer used by the pages but must stay. |
-| `_headers` | Security headers, the Content-Security-Policy and cache rules (Cloudflare Pages syntax). Fonts and images cache for a long time. `style.css` and `assets/js/` cache for one hour so a change shows up quickly. Keep the cache rules from overlapping, because Cloudflare joins repeated headers with a comma. |
+| `favicon.svg`, `favicon.ico`, `favicon.png` | Site icon: the Logo v2 icon (four staggered cards), copied from lessonshuffle.com. Pages link the `.ico`, the `.svg` and the apple-touch icon. |
+| `ls-logo.png`, `seatsolver-icon.png` | Original images. Do not rename, move or change them. They may be referenced from Google consoles. `ls-logo.png` is no longer used by the pages but must stay. The old textured logo files (`assets/logo-xs.webp`, `assets/logo-sm.webp`) are no longer used by any page since the Logo v2 rebrand. They are kept only so no served address changes; delete them whenever you like. |
+| `_headers` | Security headers, the Content-Security-Policy and cache rules (Cloudflare Pages syntax). Fonts and images cache for a long time. `assets/brand/` (SVG) caches for one week. `style.css` and `assets/js/` cache for one hour so a change shows up quickly. Keep the cache rules from overlapping, because Cloudflare joins repeated headers with a comma (so do not put `.webp` or `.png` files in `assets/brand/`). |
 | `robots.txt`, `sitemap.xml` | Update `lastmod` in the sitemap when a page changes. |
 
 ## Rules
@@ -47,7 +48,7 @@ When the SeatSolver Marketplace listing goes live, replace the placeholder sente
 
 ## Checks before merging
 
-- Open each page at 320px, 390px and desktop width, in light and dark, and with the browser text size enlarged. There must be no sideways scrolling and the header must stay on one row. Open the phone menu: it must close on a link click, Escape and a click outside.
+- Open each page at 320px, 390px and desktop width, in light and dark, and with the browser text size enlarged to 150 percent. There must be no sideways scrolling and the header must stay on one row. Open the phone menu: it must close on a link click, Escape and a click outside.
 - Search the HTML for em dashes and en dashes, `style=`, any `<script` other than the `site.js` reference, and any mention of the card guide site. There must be none.
 - Every `<img>` needs `alt`, `width` and `height`. Every internal link must resolve.
 - For the SeatSolver pages, run the `<main>` text comparison from rule 2.

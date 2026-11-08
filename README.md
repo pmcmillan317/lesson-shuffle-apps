@@ -20,7 +20,7 @@ It has one page listing every tool (`/`), a help page for each tool, and the Sea
 | `fonts/` | Days One and Rubik (woff2) with their OFL licences. |
 | `favicon.svg`, `favicon.ico`, `favicon.png` | Site icon (card fan). Pages link the `.ico`, the `.svg` and the apple-touch icon. |
 | `ls-logo.png`, `seatsolver-icon.png` | Original images. Do not rename, move or change them. They may be referenced from Google consoles. `ls-logo.png` is no longer used by the pages but must stay. |
-| `_headers` | Security headers, the Content-Security-Policy and cache rules (Cloudflare Pages syntax). |
+| `_headers` | Security headers, the Content-Security-Policy and cache rules (Cloudflare Pages syntax). Fonts and images cache for a long time. `style.css` and `assets/js/` cache for one hour so a change shows up quickly. Keep the cache rules from overlapping, because Cloudflare joins repeated headers with a comma. |
 | `robots.txt`, `sitemap.xml` | Update `lastmod` in the sitemap when a page changes. |
 
 ## Rules

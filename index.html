@@ -21,12 +21,13 @@
 <meta name="twitter:title" content="Lesson Shuffle apps">
 <meta name="twitter:description" content="Classroom tools from Lesson Shuffle, with their help, privacy and terms pages.">
 <meta name="twitter:image" content="https://apps.lessonshuffle.com/assets/og-image.png">
-
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/js/site.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -37,10 +38,25 @@
       <span>Lesson Shuffle</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="/" aria-current="page">Apps</a>
-      <a href="/seatsolver/">SeatSolver</a>
-      <a href="https://lessonshuffle.com/extensions/">Chrome extensions</a>
-      <a href="https://lessonshuffle.com/">Home</a>
+      <ul class="nav-inline">
+        <li><a href="/" aria-current="page">All tools</a></li>
+        <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+      </ul>
+      <details class="menu">
+        <summary>Menu</summary>
+        <div class="menu-panel">
+          <ul class="menu-list wrap" role="list">
+            <li><a href="/" aria-current="page">All tools</a></li>
+            <li><a class="suit-blue" href="/seatsolver/"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
+            <li><a class="suit-green" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-yellow" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
+            <li class="menu-sep" aria-hidden="true"></li>
+            <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+          </ul>
+        </div>
+      </details>
     </nav>
   </div>
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -59,31 +75,113 @@
 
   <section class="section" aria-labelledby="apps-title">
     <div class="wrap">
-      <h2 id="apps-title" class="visually-hidden">Apps and tools</h2>
-      <article class="tool tool-feature suit-blue">
-        <div class="tool-top">
-          <img src="/seatsolver-icon.png" width="128" height="128" alt="">
-          <div>
-            <h3>SeatSolver by Lesson Shuffle</h3>
-            <span class="tag suit-yellow">Marketplace listing coming soon</span>
+      <h2 id="apps-title" class="visually-hidden">All tools</h2>
+      <ul class="tool-grid" role="list">
+      <li class="reveal">
+        <article class="tool suit-blue">
+          <div class="tool-top">
+            <img src="/seatsolver-icon.png" width="128" height="128" alt="">
+            <div>
+              <h3>SeatSolver by Lesson Shuffle</h3>
+              <div class="tags"><span class="tag">Google Slides add-on</span></div>
+            </div>
           </div>
-        </div>
-        <p>A seating chart add-on for Google Slides.</p>
-        <div class="tool-actions">
-          <a class="btn btn-main" href="/seatsolver/">See the details<span class="visually-hidden"> for SeatSolver</span></a>
-          <span class="tool-links"><a href="/seatsolver-privacy/">Privacy policy</a> <a href="/seatsolver-terms/">Terms of service</a></span>
-        </div>
-      </article>
-
-      <div class="tool-grid">
-        <article class="tool tool-tile suit-green">
-          <h3><a class="stretch" href="https://lessonshuffle.com/extensions/">Chrome extensions for the classroom</a></h3>
-          <p>Visual Timer, WebInk, PolyRead and Bell Schedule.</p>
+          <div class="tags"><span class="tag suit-yellow">Marketplace listing coming soon</span></div>
+          <p>A seating chart add-on for Google Slides.</p>
+          <div class="tool-actions">
+            <a class="btn btn-main btn-sm" href="/seatsolver/">Learn more<span class="visually-hidden"> about SeatSolver</span></a>
+          </div>
+          <ul class="tool-links" role="list">
+          <li><a href="/seatsolver-privacy/">Privacy policy<span class="visually-hidden"> for SeatSolver</span></a></li>
+          <li><a href="/seatsolver-terms/">Terms of service<span class="visually-hidden"> for SeatSolver</span></a></li>
+          </ul>
         </article>
-        <div class="tool tool-more suit-yellow">
+      </li>
+      <li class="reveal delay-1">
+        <article class="tool suit-green">
+          <div class="tool-top">
+            <img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="">
+            <div>
+              <h3>Visual Timer</h3>
+              <div class="tags"><span class="tag">Chrome extension</span></div>
+            </div>
+          </div>
+          <p>A classroom visual timer that floats over any page, including full-screen Google Slides and Canva. Themes, sounds and shortcuts.</p>
+          <div class="tool-actions">
+            <a class="btn btn-main btn-sm" href="/visual-timer/">Learn more<span class="visually-hidden"> about Visual Timer</span></a>
+          <a class="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/visual-timer-by-lesson-sh/iblmcfdoeefpabfcfjgigmaoomcbekcm" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> for Visual Timer (opens in a new tab)</span></a>
+          </div>
+          <ul class="tool-links" role="list">
+          <li><a href="https://lessonshuffle.com/extensions/visual-timer/privacy/">Privacy policy<span class="visually-hidden"> for Visual Timer</span></a></li>
+          <li><a href="https://lessonshuffle.com/extensions/visual-timer/terms/">Terms of use<span class="visually-hidden"> for Visual Timer</span></a></li>
+          </ul>
+        </article>
+      </li>
+      <li class="reveal delay-2">
+        <article class="tool suit-red">
+          <div class="tool-top">
+            <img src="/assets/icons/webink.webp" width="128" height="128" alt="">
+            <div>
+              <h3>WebInk</h3>
+              <div class="tags"><span class="tag">Chrome extension</span></div>
+            </div>
+          </div>
+          <p>Draw, highlight and annotate on web pages, then save a screenshot. WebInk makes no network requests.</p>
+          <div class="tool-actions">
+            <a class="btn btn-main btn-sm" href="/webink/">Learn more<span class="visually-hidden"> about WebInk</span></a>
+          <a class="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/webink-by-lesson-shuffle/jigllodaioibmdjkghjplifpancommno" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> for WebInk (opens in a new tab)</span></a>
+          </div>
+          <ul class="tool-links" role="list">
+          <li><a href="https://lessonshuffle.com/extensions/webink/privacy/">Privacy policy<span class="visually-hidden"> for WebInk</span></a></li>
+          <li><a href="https://lessonshuffle.com/extensions/webink/terms/">Terms of use<span class="visually-hidden"> for WebInk</span></a></li>
+          </ul>
+        </article>
+      </li>
+      <li class="reveal">
+        <article class="tool suit-yellow">
+          <div class="tool-top">
+            <img src="/assets/icons/polyread.webp" width="128" height="128" alt="">
+            <div>
+              <h3>PolyRead</h3>
+              <div class="tags"><span class="tag">Chrome extension</span></div>
+            </div>
+          </div>
+          <p>Reads text aloud in English, Spanish and French with word-by-word highlighting, to support multilingual learners.</p>
+          <div class="tool-actions">
+            <a class="btn btn-main btn-sm" href="/polyread/">Learn more<span class="visually-hidden"> about PolyRead</span></a>
+          <a class="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/polyread-by-lesson-shuffl/encenjhdcpfpjlhgllkgddmlnokoedgn" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> for PolyRead (opens in a new tab)</span></a>
+          </div>
+          <ul class="tool-links" role="list">
+          <li><a href="https://lessonshuffle.com/extensions/polyread/privacy/">Privacy policy<span class="visually-hidden"> for PolyRead</span></a></li>
+          <li><a href="https://lessonshuffle.com/extensions/polyread/terms/">Terms of use<span class="visually-hidden"> for PolyRead</span></a></li>
+          </ul>
+        </article>
+      </li>
+      <li class="reveal delay-1">
+        <article class="tool suit-blue">
+          <div class="tool-top">
+            <img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="">
+            <div>
+              <h3>Bell Schedule</h3>
+              <div class="tags"><span class="tag">Chrome extension</span></div>
+            </div>
+          </div>
+          <p>Rings a bell and announces each class period out loud. A simple replacement for the old speaking clock.</p>
+          <div class="tool-actions">
+            <a class="btn btn-main btn-sm" href="/bell-schedule/">Learn more<span class="visually-hidden"> about Bell Schedule</span></a>
+          <a class="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/bell-schedule-class-alarm/ncgcebnhodkfkjjfajphpilkgfpccebb" target="_blank" rel="noopener">Get it on Chrome<span class="visually-hidden"> for Bell Schedule (opens in a new tab)</span></a>
+          </div>
+          <ul class="tool-links" role="list">
+          <li><a href="https://lessonshuffle.com/extensions/bell-schedule/privacy/">Privacy and terms<span class="visually-hidden"> for Bell Schedule</span></a></li>
+          </ul>
+        </article>
+      </li>
+      <li class="reveal delay-2">
+        <div class="tool tool-more suit-green">
           <p>More tools will be listed here as their pages go up.</p>
         </div>
-      </div>
+      </li>
+      </ul>
     </div>
   </section>
 </main>
@@ -91,10 +189,18 @@
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <div>
-      <img src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
-      <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
-    </div>
+    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <nav aria-label="Lesson Shuffle tools">
+      <p class="label">Tools</p>
+      <ul class="two-col">
+        <li><a href="/">All tools</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
+        <li><a href="/visual-timer/">Visual Timer</a></li>
+        <li><a href="/webink/">WebInk</a></li>
+        <li><a href="/polyread/">PolyRead</a></li>
+        <li><a href="/bell-schedule/">Bell Schedule</a></li>
+      </ul>
+    </nav>
     <nav aria-label="SeatSolver legal pages">
       <p class="label">SeatSolver</p>
       <ul>
@@ -102,6 +208,9 @@
         <li><a href="/seatsolver-terms/">Terms</a></li>
       </ul>
     </nav>
+  </div>
+  <div class="wrap footer-base">
+    <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
   </div>
 </footer>
 </body>

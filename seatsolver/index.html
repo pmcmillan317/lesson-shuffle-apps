@@ -21,12 +21,13 @@
 <meta name="twitter:title" content="SeatSolver by Lesson Shuffle">
 <meta name="twitter:description" content="A seating chart add-on for Google Slides. Help, privacy and support.">
 <meta name="twitter:image" content="https://apps.lessonshuffle.com/assets/og-image.png">
-
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/js/site.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -37,10 +38,25 @@
       <span>Lesson Shuffle</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="/">Apps</a>
-      <a href="/seatsolver/" aria-current="page">SeatSolver</a>
-      <a href="https://lessonshuffle.com/extensions/">Chrome extensions</a>
-      <a href="https://lessonshuffle.com/">Home</a>
+      <ul class="nav-inline">
+        <li><a href="/">All tools</a></li>
+        <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+      </ul>
+      <details class="menu">
+        <summary>Menu</summary>
+        <div class="menu-panel">
+          <ul class="menu-list wrap" role="list">
+            <li><a href="/">All tools</a></li>
+            <li><a class="suit-blue" href="/seatsolver/" aria-current="page"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
+            <li><a class="suit-green" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-yellow" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
+            <li class="menu-sep" aria-hidden="true"></li>
+            <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+          </ul>
+        </div>
+      </details>
     </nav>
   </div>
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -48,7 +64,7 @@
 
 <main id="main" class="page">
   <div class="wrap narrow prose">
-    <div class="app-head">
+    <div class="app-head suit-blue">
       <img src="/seatsolver-icon.png" width="128" height="128" alt="">
       <div>
         <h1>SeatSolver by Lesson Shuffle</h1>
@@ -59,18 +75,18 @@
     <p>Made by Patrick McMillan, Lesson Shuffle.</p>
 
     <section aria-labelledby="get-started">
-      <h2 id="get-started">Get started</h2>
+      <h2 class="reveal" id="get-started">Get started</h2>
       <ol class="steps" role="list">
-        <li>Open any Google Slides deck in a web browser.</li>
-        <li>Install SeatSolver by Lesson Shuffle from the Google Workspace Marketplace. <span class="placeholder">(The Marketplace link goes here once the listing is live.)</span></li>
-        <li>Choose <b>Extensions &rsaquo; SeatSolver by Lesson Shuffle &rsaquo; Open SeatSolver</b>.</li>
-        <li>Press <b>Help</b> inside the window for step-by-step directions.</li>
+        <li class="reveal">Open any Google Slides deck in a web browser.</li>
+        <li class="reveal">Install SeatSolver by Lesson Shuffle from the Google Workspace Marketplace. <span class="placeholder">(The Marketplace link goes here once the listing is live.)</span></li>
+        <li class="reveal">Choose <b>Extensions &rsaquo; SeatSolver by Lesson Shuffle &rsaquo; Open SeatSolver</b>.</li>
+        <li class="reveal">Press <b>Help</b> inside the window for step-by-step directions.</li>
       </ol>
       <p>The first time you open it, Google asks you to allow it. It only asks to work with the presentation you have open and to show its menu and window.</p>
     </section>
 
     <section aria-labelledby="board-use">
-      <h2 id="board-use">Using it on a classroom board</h2>
+      <h2 class="reveal" id="board-use">Using it on a classroom board</h2>
       <ul>
         <li>Sign in to the same Google account on the board.</li>
         <li>Open any deck and open SeatSolver.</li>
@@ -81,7 +97,7 @@
     </section>
 
     <section aria-labelledby="trouble">
-      <h2 id="trouble">Something not working?</h2>
+      <h2 class="reveal" id="trouble">Something not working?</h2>
       <ul>
         <li>Choose <b>Extensions &rsaquo; SeatSolver by Lesson Shuffle &rsaquo; Check setup</b>. It tests your private storage and the open deck, then shows the result.</li>
         <li>If you see &ldquo;Storage is full,&rdquo; remove photos you no longer need, or use <b>Setup &rsaquo; New term</b>.</li>
@@ -91,39 +107,39 @@
     </section>
 
     <section aria-labelledby="faq">
-      <h2 id="faq">Frequently asked questions</h2>
-      <div class="qa">
+      <h2 class="reveal" id="faq">Frequently asked questions</h2>
+      <div class="qa reveal">
         <h3>Does Lesson Shuffle collect my students&rsquo; names or photos?</h3>
         <p>No. Nothing is collected. SeatSolver has no server, no database, no analytics and makes no outside web requests. Lesson Shuffle never sees what you enter.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>Where is my data kept?</h3>
         <p>Student names, photos, notes and room layouts are saved in SeatSolver&rsquo;s private storage inside your own Google account. Only your account can read it. It is not saved in the Slides deck. People who open the same deck do not see it.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>What permissions does it ask for?</h3>
         <p>Two. It works with the presentation you have open (presentations.currentonly). It shows its menu and window inside Slides (script.container.ui). That is all.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>How do I delete my data?</h3>
         <ul>
           <li>In SeatSolver, use <b>Setup</b> and choose <b>Erase all my SeatSolver data</b>.</li>
           <li>To remove access, go to <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>, pick SeatSolver and remove access. You can also uninstall the add-on from Google Workspace Marketplace.</li>
         </ul>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>How do I start a new term?</h3>
         <p>Open SeatSolver and choose <b>Setup &rsaquo; New term</b>. It clears students and photos. It keeps your room layouts.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>What happens to a chart I send to a slide?</h3>
         <p>It is drawn into your own deck as a picture, with a small SeatSolver reminder picture in the corner that you can delete. Who sees the slide depends on how you share that deck. You choose whether the slide includes photos. You are responsible for photos you put in decks you share.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>Can students use it?</h3>
         <p>No. SeatSolver is for teachers. Students do not sign in to it.</p>
       </div>
-      <div class="qa">
+      <div class="qa reveal">
         <h3>Should I keep a backup?</h3>
         <p>If you download a backup file, it holds the names and photos you entered. Keep it private, like any class list. Please keep a backup of any class list you cannot easily recreate.</p>
       </div>
@@ -131,7 +147,7 @@
 
     <section aria-labelledby="contact">
       <div class="contact">
-        <h2 id="contact">Contact</h2>
+        <h2 class="reveal" id="contact">Contact</h2>
         <p>Email <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a>. Please do not put student names or photos in your message.</p>
       </div>
       <p class="legal-links"><a href="/seatsolver-privacy/">Privacy policy</a> &middot; <a href="/seatsolver-terms/">Terms of service</a></p>
@@ -139,13 +155,35 @@
   </div>
 </main>
 
+<nav class="more-band" aria-labelledby="more-tools">
+  <div class="wrap narrow prose">
+    <div class="more-tools">
+      <h2 id="more-tools">More Lesson Shuffle tools</h2>
+      <ul class="more-list" role="list">
+        <li><a class="suit-green" href="/visual-timer/"><img src="/assets/icons/visual-timer.webp" width="128" height="128" alt="" loading="lazy"><span>Visual Timer</span></a></li>
+        <li><a class="suit-red" href="/webink/"><img src="/assets/icons/webink.webp" width="128" height="128" alt="" loading="lazy"><span>WebInk</span></a></li>
+        <li><a class="suit-yellow" href="/polyread/"><img src="/assets/icons/polyread.webp" width="128" height="128" alt="" loading="lazy"><span>PolyRead</span></a></li>
+        <li><a class="suit-blue" href="/bell-schedule/"><img src="/assets/icons/bell-schedule.webp" width="128" height="128" alt="" loading="lazy"><span>Bell Schedule</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <div>
-      <img src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
-      <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
-    </div>
+    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <nav aria-label="Lesson Shuffle tools">
+      <p class="label">Tools</p>
+      <ul class="two-col">
+        <li><a href="/">All tools</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
+        <li><a href="/visual-timer/">Visual Timer</a></li>
+        <li><a href="/webink/">WebInk</a></li>
+        <li><a href="/polyread/">PolyRead</a></li>
+        <li><a href="/bell-schedule/">Bell Schedule</a></li>
+      </ul>
+    </nav>
     <nav aria-label="SeatSolver legal pages">
       <p class="label">SeatSolver</p>
       <ul>
@@ -153,6 +191,9 @@
         <li><a href="/seatsolver-terms/">Terms</a></li>
       </ul>
     </nav>
+  </div>
+  <div class="wrap footer-base">
+    <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
   </div>
 </footer>
 </body>

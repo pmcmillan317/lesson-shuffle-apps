@@ -21,12 +21,13 @@
 <meta name="twitter:title" content="SeatSolver terms of service">
 <meta name="twitter:description" content="Terms for using SeatSolver by Lesson Shuffle.">
 <meta name="twitter:image" content="https://apps.lessonshuffle.com/assets/og-image.png">
-
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/js/site.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -37,10 +38,25 @@
       <span>Lesson Shuffle</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="/">Apps</a>
-      <a href="/seatsolver/" aria-current="true">SeatSolver</a>
-      <a href="https://lessonshuffle.com/extensions/">Chrome extensions</a>
-      <a href="https://lessonshuffle.com/">Home</a>
+      <ul class="nav-inline">
+        <li><a href="/">All tools</a></li>
+        <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+      </ul>
+      <details class="menu">
+        <summary>Menu</summary>
+        <div class="menu-panel">
+          <ul class="menu-list wrap" role="list">
+            <li><a href="/">All tools</a></li>
+            <li><a class="suit-blue" href="/seatsolver/" aria-current="true"><span class="dot" aria-hidden="true"></span>SeatSolver</a></li>
+            <li><a class="suit-green" href="/visual-timer/"><span class="dot" aria-hidden="true"></span>Visual Timer</a></li>
+            <li><a class="suit-red" href="/webink/"><span class="dot" aria-hidden="true"></span>WebInk</a></li>
+            <li><a class="suit-yellow" href="/polyread/"><span class="dot" aria-hidden="true"></span>PolyRead</a></li>
+            <li><a class="suit-blue" href="/bell-schedule/"><span class="dot" aria-hidden="true"></span>Bell Schedule</a></li>
+            <li class="menu-sep" aria-hidden="true"></li>
+            <li><a href="https://lessonshuffle.com/">Lesson Shuffle home</a></li>
+          </ul>
+        </div>
+      </details>
     </nav>
   </div>
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -106,10 +122,18 @@
 <footer class="footer">
   <div class="stripe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="wrap footer-grid">
-    <div>
-      <img src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
-      <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
-    </div>
+    <img class="footer-logo" src="/assets/logo-sm.webp" width="240" height="212" alt="Lesson Shuffle logo" loading="lazy">
+    <nav aria-label="Lesson Shuffle tools">
+      <p class="label">Tools</p>
+      <ul class="two-col">
+        <li><a href="/">All tools</a></li>
+        <li><a href="/seatsolver/">SeatSolver</a></li>
+        <li><a href="/visual-timer/">Visual Timer</a></li>
+        <li><a href="/webink/">WebInk</a></li>
+        <li><a href="/polyread/">PolyRead</a></li>
+        <li><a href="/bell-schedule/">Bell Schedule</a></li>
+      </ul>
+    </nav>
     <nav aria-label="SeatSolver legal pages">
       <p class="label">SeatSolver</p>
       <ul>
@@ -117,6 +141,9 @@
         <li><a href="/seatsolver-terms/">Terms</a></li>
       </ul>
     </nav>
+  </div>
+  <div class="wrap footer-base">
+    <p class="made">Made by Patrick McMillan, Lesson Shuffle. <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a> <span class="pair">&middot; <a href="https://lessonshuffle.com">lessonshuffle.com</a></span></p>
   </div>
 </footer>
 </body>

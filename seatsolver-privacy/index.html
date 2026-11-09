@@ -74,13 +74,22 @@
       <p>SeatSolver by Lesson Shuffle is a Google Slides add-on that helps a teacher plan classroom seating. It is made by Patrick McMillan (Lesson Shuffle). Contact: <a href="mailto:Patrick@lessonshuffle.com">Patrick@lessonshuffle.com</a>.</p>
     </section>
 
+    <section aria-labelledby="permissions">
+      <h2 id="permissions">Permissions SeatSolver asks Google for</h2>
+      <ul>
+        <li><b>Work with the presentation you have open</b> (presentations.currentonly). SeatSolver uses this when you press <b>Send to slide</b>. It adds a slide to that deck. The slide holds your seating chart as a picture, a small SeatSolver reminder picture that you can move or delete, and a speaker note that marks the slide as SeatSolver&rsquo;s. If you send the same chart again, SeatSolver adds the new slide and then deletes the one it made before. To find that earlier slide, it looks at the speaker notes in the deck. It does not keep or copy them, and it does not read or store any other slide content. The <b>Check setup</b> menu item also counts the slides in the deck and shows you the number.</li>
+        <li><b>Show a menu and window inside Slides</b> (script.container.ui). Used to open SeatSolver.</li>
+      </ul>
+      <p>SeatSolver asks for nothing else. It does not receive your name, email address or other Google account details, and it cannot see your Drive files, your other presentations, your email or your contacts.</p>
+    </section>
+
     <section aria-labelledby="what-you-enter">
       <h2 id="what-you-enter">What you enter, and where it is kept</h2>
       <ul>
         <li>Student names, labels, private notes, room layouts, zones and rules are saved in SeatSolver&rsquo;s private add-on storage.</li>
-        <li>Student photos are saved there first. If you have more photos than fit, the rest are saved in the add-on storage of the deck you have open, under a private key made only for you.</li>
+        <li>Student photos are saved there first. If you have more photos than fit, the rest are saved in the add-on storage of the deck you have open, under a label made only for you.</li>
         <li>That storage is inside Google&rsquo;s systems, and it belongs to SeatSolver, not to the slides. It does not appear in the Slides window, and people who open or are sent the deck do not see it.</li>
-        <li>Only your Google account can read the private storage. In a deck&rsquo;s storage, SeatSolver reads only the key made for you.</li>
+        <li>Only your Google account can read the private storage. In a deck&rsquo;s storage, SeatSolver reads only the label made for you.</li>
         <li>Lesson Shuffle has no server or database and cannot see this information.</li>
       </ul>
     </section>
@@ -90,11 +99,10 @@
       <ul>
         <li><b>It stays in Google&rsquo;s systems.</b> Your information is kept in Google&rsquo;s own storage for add-ons. Google protects it with its own security, including encryption of data it stores and of data that travels between your browser and Google.</li>
         <li><b>Only you can open it.</b> SeatSolver uses private storage that belongs to your Google account. Nobody at Lesson Shuffle can read it.</li>
-        <li><b>It goes nowhere else.</b> SeatSolver has no server, database, analytics or advertising, and it makes no outside web requests. Nothing is sent to Lesson Shuffle or to any other company. Nothing is sold or shared.</li>
+        <li><b>It goes nowhere else.</b> SeatSolver has no server, database, analytics or advertising, and it makes no outside web requests. Nothing is sent to Lesson Shuffle or to any other company.</li>
         <li><b>It asks for as little as it can.</b> SeatSolver asks Google for two permissions. The first covers only the one deck you have open, not your other files, email or contacts.</li>
-        <li><b>People and AI do not use it.</b> Nobody at Lesson Shuffle reads your students&rsquo; names, photos or notes. We do not use your information to train AI or machine learning models.</li>
-        <li><b>It is checked and saved safely.</b> SeatSolver checks what it receives before it saves it or draws it on a slide. It saves one change at a time, so two open windows cannot overwrite each other.</li>
-        <li><b>You decide how long it is kept.</b> It stays in your storage until you erase it (see Deleting your data below). Lesson Shuffle keeps no copy.</li>
+        <li><b>It is checked and saved safely.</b> SeatSolver checks what it receives before it saves it or draws it on a slide. It saves one change at a time, and it will not overwrite a newer version of your classes and seating saved from another window or device.</li>
+        <li><b>You decide how long it is kept.</b> It stays in your storage until you erase it (see Keeping and deleting your data below). Lesson Shuffle keeps no copy.</li>
       </ul>
     </section>
 
@@ -104,18 +112,16 @@
       <p>The one exception is a technical error report. If SeatSolver stops with an error, Google may keep a short error message and the place in the code where it happened, which only Lesson Shuffle can see. We use these only to fix bugs, and we do not look for or keep student information in them.</p>
     </section>
 
-    <section aria-labelledby="permissions">
-      <h2 id="permissions">Permissions SeatSolver asks Google for</h2>
-      <ul>
-        <li>Work with the presentation you have open (presentations.currentonly). Used only when you press <b>Send to slide</b>, to draw the seating chart on a slide in that deck. To replace a chart you sent before, SeatSolver looks at the speaker notes in that deck to find the slide it made. It does not keep or copy them, and it does not read or store any other slide content.</li>
-        <li>Show a menu and window inside Slides (script.container.ui). Used to open SeatSolver.</li>
-      </ul>
-      <p>SeatSolver asks for nothing else.</p>
-    </section>
-
     <section aria-labelledby="google-policy">
-      <h2 id="google-policy">Google API Services User Data Policy</h2>
-      <p>SeatSolver&rsquo;s use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      <h2 id="google-policy">How we use and share your information</h2>
+      <p>SeatSolver&rsquo;s use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. The use of information received from Google Workspace scopes will adhere to the <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy">Google Workspace user data and developer policy</a>, including the Limited Use requirements.</p>
+      <ul>
+        <li>We use your information only to run the seating chart features you see in SeatSolver and to draw your chart on a slide.</li>
+        <li>We do not transfer it to anyone. Nothing leaves Google&rsquo;s systems unless you send a chart to a slide, print it or download a backup file yourself.</li>
+        <li>No person at Lesson Shuffle reads your students&rsquo; names, photos or notes. The only exceptions are something you choose to send us (for example, in an email asking for help), a security problem we have to investigate, or a legal requirement.</li>
+        <li>We do not sell your information or use it for advertising.</li>
+        <li>We do not use it to create, train or improve any machine learning or AI model.</li>
+      </ul>
     </section>
 
     <section aria-labelledby="slides-you-send">
@@ -124,17 +130,19 @@
     </section>
 
     <section aria-labelledby="deleting">
-      <h2 id="deleting">Deleting your data</h2>
+      <h2 id="deleting">Keeping and deleting your data</h2>
+      <p>SeatSolver keeps your information until you erase it. Lesson Shuffle keeps no copy.</p>
       <ul>
-        <li>In SeatSolver: <b>Setup</b>, then <b>Erase all my SeatSolver data</b>. This erases everything in your private storage, and any extra photos kept in the storage of the deck you have open.</li>
+        <li>In SeatSolver: <b>Setup</b>, then <b>Erase all my SeatSolver data</b>. This permanently erases everything saved in your private storage, and any extra photos kept in the storage of the deck you have open.</li>
         <li><b>Setup &rsaquo; New term</b> clears students and photos but keeps room layouts.</li>
-        <li>To remove access or uninstall, go to <a href="https://myaccount.google.com/connections">Google Account settings</a>, pick SeatSolver, and remove access. You can also uninstall it from Google Workspace Marketplace.</li>
+        <li>Erase your data before you remove SeatSolver, because you cannot open it once it is gone. To remove access or uninstall, go to <a href="https://myaccount.google.com/connections">Google Account settings</a>, pick SeatSolver, and remove access. You can also uninstall it from Google Workspace Marketplace.</li>
+        <li>Slides you already sent stay in that deck until you delete them there.</li>
       </ul>
     </section>
 
     <section aria-labelledby="backups">
       <h2 id="backups">Backups</h2>
-      <p>If you download a backup file, it contains the names and photos you entered. Keep it private, as you would any class list.</p>
+      <p>If you download a backup file, it contains the names and photos you entered. The file is not encrypted. Keep it private, as you would any class list.</p>
     </section>
 
     <section aria-labelledby="children">
@@ -144,7 +152,7 @@
 
     <section aria-labelledby="changes">
       <h2 id="changes">Changes</h2>
-      <p>If this policy changes, the new date appears at the top of this page.</p>
+      <p>If this policy changes, the new date appears at the top of this page. If we ever change how SeatSolver uses Google user data, we will update this page first and ask for your agreement before we use your data in the new way.</p>
     </section>
 
     <section aria-labelledby="contact">

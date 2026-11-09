@@ -102,6 +102,8 @@ b, strong { font-weight: 600; }
 .suit-green  { --suit: var(--green);  --soft: var(--green-soft);  --sink: var(--green-ink); }
 .suit-yellow { --suit: var(--yellow); --soft: var(--yellow-soft); --sink: var(--yellow-ink); }
 .suit-red    { --suit: var(--red);    --soft: var(--red-soft);    --sink: var(--red-ink); }
+/* SeatSolver's colour: the Logo v2 navy (#305f82). It is dark, so text on it is white, not ink. */
+.suit-navy   { --suit: #305f82;       --soft: var(--blue-soft);   --sink: var(--blue-ink); --on-suit: #ffffff; }
 
 /* Buttons */
 .btn {
@@ -240,7 +242,7 @@ b, strong { font-weight: 600; }
 .tool-grid > li { display: flex; min-width: 0; }
 .tool { position: relative; display: flex; flex: 1; flex-direction: column; gap: .75rem; min-width: 0; overflow: hidden; background: var(--surface); border: .3rem solid var(--cut); border-radius: 1.1rem; padding: 0 1.25rem 1.25rem; box-shadow: var(--shadow-lift); transition: transform .2s, box-shadow .2s; }
 @media (hover: hover) { .tool:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(20, 40, 60, .1), 0 20px 36px rgba(20, 40, 60, .16); } }
-.tool-top { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem; margin-inline: -1.25rem; padding: 1.1rem 1.25rem; background: var(--suit, var(--blue)); color: var(--ink-on-suit); }
+.tool-top { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem; margin-inline: -1.25rem; padding: 1.1rem 1.25rem; background: var(--suit, var(--blue)); color: var(--on-suit, var(--ink-on-suit)); }
 .tool-top > div { flex: 1 1 9rem; min-width: 0; }
 .tool img { width: 3.5rem; height: 3.5rem; flex: none; border-radius: 50%; box-shadow: 0 0 0 .2rem var(--cut); }
 .tool h3 { font-size: 1.25rem; overflow-wrap: anywhere; color: inherit; }
@@ -285,7 +287,7 @@ b, strong { font-weight: 600; }
 
 /* Tool pages (SeatSolver and the Chrome extensions). The banner is a solid suit-colour card with the cut line,
    and the tool's own icon sits in a cut-line ring. */
-.app-head { display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem; padding: 1.25rem; margin-bottom: 1.5rem; background: var(--suit, var(--blue)); color: var(--ink-on-suit); border: .3rem solid var(--cut); border-radius: 1.25rem; box-shadow: var(--shadow-lift); }
+.app-head { display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem; padding: 1.25rem; margin-bottom: 1.5rem; background: var(--suit, var(--blue)); color: var(--on-suit, var(--ink-on-suit)); border: .3rem solid var(--cut); border-radius: 1.25rem; box-shadow: var(--shadow-lift); }
 .app-head img { flex: none; width: 4.5rem; height: 4.5rem; border-radius: 50%; box-shadow: 0 0 0 .2rem var(--cut); }
 .app-head > div { flex: 1 1 9rem; min-width: 0; }
 .app-head h1 { font-size: clamp(1.45rem, 5vw, 2.2rem); margin-bottom: .4rem; line-height: 1.12; overflow-wrap: anywhere; }

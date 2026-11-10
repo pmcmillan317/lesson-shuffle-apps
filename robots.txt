@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /coffee/
 
 Sitemap: https://apps.lessonshuffle.com/sitemap.xml

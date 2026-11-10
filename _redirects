@@ -1,0 +1,5 @@
+# The coffee tip link. The QR code and the "Open Venmo" button in the site dialog point at /coffee/,
+# so the payment page can be changed here without touching the site or any extension.
+# 302 (temporary) on purpose: never make this a 301, browsers would remember the old destination.
+/coffee https://venmo.com/pmcmillan317?txn=pay&note=Buy%20me%20a%20coffee 302
+/coffee/ https://venmo.com/pmcmillan317?txn=pay&note=Buy%20me%20a%20coffee 302

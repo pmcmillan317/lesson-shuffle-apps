@@ -382,6 +382,23 @@ details.qa[open] summary { padding-bottom: .35rem; }
 .footer .made { display: flex; flex-wrap: wrap; align-items: center; gap: 0 .4rem; margin: 0; font-size: 1rem; color: rgba(255, 255, 255, .78); }
 .footer .pair { display: inline-flex; align-items: center; gap: 0 .4rem; white-space: nowrap; }
 .footer .made a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; }
+
+/* Coffee tip: a quiet line in the footer (hub and tool pages) and a small dialog that site.js builds.
+   Without the script the link goes straight to /coffee/. The QR code keeps its own white card in dark mode so it scans. */
+.footer .coffee { gap: .1rem 1rem; margin-bottom: .35rem; }
+.footer .coffee-link { gap: .5rem; padding: 0 1.1rem; border: 2px solid rgba(255, 255, 255, .75); border-radius: 999px; font-weight: 600; text-decoration: none; transition: background-color .15s, border-color .15s, color .15s; }
+.footer .coffee-link:hover { background: rgba(255, 255, 255, .14); border-color: var(--yellow); color: var(--yellow); }
+.cup { flex: none; width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.coffee-dialog { width: min(24rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; overflow: auto; border: 1px solid var(--rule); border-radius: 1.25rem; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-lift); }
+.coffee-dialog::backdrop { background: rgba(20, 33, 46, .62); }
+.coffee-dialog .tabs { padding-top: .6rem; }
+.coffee-body { padding: 1.1rem 1.5rem 1.4rem; text-align: center; }
+.coffee-body h2 { margin-bottom: .6rem; font-size: 1.6rem; }
+.coffee-body p { margin: 0 0 .9rem; }
+.coffee-qr { width: 13.75rem; height: 13.75rem; margin: 0 auto .7rem; border: 1px solid var(--rule); border-radius: .75rem; background: #fff; }
+.coffee-body .coffee-hint, .coffee-body .coffee-fine { color: var(--muted); }
+.coffee-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1rem; }
+.coffee-body .coffee-fine { margin: 0; }
 body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 main { flex: 1 0 auto; }
 

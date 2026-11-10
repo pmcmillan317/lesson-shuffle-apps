@@ -399,6 +399,12 @@ details.qa[open] summary { padding-bottom: .35rem; }
 .coffee-body .coffee-hint, .coffee-body .coffee-fine { color: var(--muted); }
 .coffee-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1rem; }
 .coffee-body .coffee-fine { margin: 0; }
+/* The tip card: on the hub above the tools, and on each extension page after Contact. */
+.coffee-card { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.1rem; margin: 0 0 1.5rem; padding: 1rem 1.25rem; background: var(--yellow-soft); border: 1px solid var(--rule); border-left: .5rem solid var(--yellow); border-radius: var(--r); }
+.coffee-card .cup { width: 1.7rem; height: 1.7rem; color: var(--yellow-ink); }
+.coffee-card p { flex: 1 1 15rem; margin: 0; }
+.coffee-card .btn { flex: none; }
+.page .coffee-card { margin: 1.5rem 0 0; }
 body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 main { flex: 1 0 auto; }
 

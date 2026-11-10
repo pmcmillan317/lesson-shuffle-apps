@@ -68,13 +68,11 @@
     var body = make("div", "coffee-body");
     var title = make("h2", "", "Buy me a coffee");
     title.id = "coffee-title";
-    var intro = make("p", "", "These tools are free to use. If one saved you time, a tip is welcome, but never expected. Thank you!");
     var qr = make("img", "coffee-qr");
     qr.src = "/assets/coffee-qr.svg";
     qr.width = 220;
     qr.height = 220;
     qr.alt = "QR code. Scan it with your phone's camera to open my Venmo tip page.";
-    var hint = make("p", "coffee-hint", "Scan with your phone, or use the button.");
     var actions = make("div", "coffee-actions");
     var go = make("a", "btn btn-main", "Open Venmo");
     go.href = "/coffee/";
@@ -85,8 +83,8 @@
     close.type = "button";
     actions.appendChild(go);
     actions.appendChild(close);
-    var fine = make("p", "coffee-fine", "Tips go through Venmo, which works in the United States only. This site never sees them.");
-    [title, intro, qr, hint, actions, fine].forEach(function (node) { body.appendChild(node); });
+    var fine = make("p", "coffee-fine", "Venmo, US only.");
+    [title, qr, actions, fine].forEach(function (node) { body.appendChild(node); });
     dialog.appendChild(tabs);
     dialog.appendChild(body);
 

@@ -396,7 +396,7 @@ details.qa[open] summary { padding-bottom: .35rem; }
 .coffee-body h2 { margin-bottom: .6rem; font-size: 1.6rem; }
 .coffee-body p { margin: 0 0 .9rem; }
 .coffee-qr { width: 13.75rem; height: 13.75rem; margin: 0 auto .7rem; border: 1px solid var(--rule); border-radius: .75rem; background: #fff; }
-.coffee-body .coffee-hint, .coffee-body .coffee-fine { color: var(--muted); }
+.coffee-body .coffee-fine { color: var(--muted); }
 .coffee-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-bottom: 1rem; }
 .coffee-body .coffee-fine { margin: 0; }
 /* The tip card: on the hub above the tools, and on each extension page after Contact. */

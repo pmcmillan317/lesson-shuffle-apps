@@ -28,8 +28,6 @@ It has one page listing every tool (`/`), a help page for each tool, and the Sea
 | `_headers` | Security headers, the Content-Security-Policy and cache rules (Cloudflare Pages syntax). Fonts and images cache for a long time. `assets/brand/` (SVG) caches for one week. `style.css` and `assets/js/` cache for one hour so a change shows up quickly. Keep the cache rules from overlapping, because Cloudflare joins repeated headers with a comma (so do not put `.webp` or `.png` files in `assets/brand/`). |
 | `robots.txt`, `sitemap.xml` | Update `lastmod` in the sitemap when a page changes. |
 
-**Web Analytics snippet:** every page has the Cloudflare Web Analytics snippet just before `</body>` (a `<script type='module'>` from static.cloudflareinsights.com, reporting to cloudflareinsights.com; both allowed in the CSP). Copy it onto any new page. It feeds the private stats page on lessonshuffle.com.
-
 ## Rules
 
 1. **Do not change or remove any existing URL.** The Google Workspace add-on submission links to `/seatsolver/`, `/seatsolver-privacy/` and `/seatsolver-terms/`. The Chrome Web Store listings link to `/visual-timer/privacy/`, `/webink/privacy/`, `/polyread/privacy/` and `/bell-schedule/privacy/`. Google consoles may use `/favicon.png`, `/ls-logo.png`, `/seatsolver-icon.png` and `/style.css`. If a page ever has to move, leave a redirect behind. These addresses must never move without one.

@@ -1,9 +1,9 @@
-/* Lesson Shuffle apps site. No dependencies, no cookies. It sends one anonymous click count (the button's label and the page path, nothing about the visitor) when a button marked data-track is pressed.
+/* Lesson Shuffle apps site. No dependencies, no cookies. It sends anonymous counts (a label and the page path, nothing about the visitor) for clicks and campaign visits.
    1) Adds the "js" class (CSS only hides .reveal elements when this class is present).
    2) Reveals .reveal elements once as they scroll into view.
    3) Closes the phone menu on link click, Escape and outside click.
    4) Opens the small coffee tip dialog (QR code and a button) from links marked data-coffee.
-   5) Counts clicks on links marked data-track (see initTrack).
+   5) Counts clicks (data-track labels, email, downloads, links to other sites) and campaign visits (see initTrack).
    Everything works without this file: the menu is a plain <details>, and nothing is hidden. */
 (function () {
   "use strict";
@@ -154,22 +154,61 @@
   }
 
   /* ---- Click counts ----------------------------------------------------------------------- */
-  // A link marked data-track="<label>" sends one anonymous count when pressed: the label and the page
-  // path, nothing about the visitor. It never blocks or delays the link.
+  // Anonymous counts, sent only as a label and the page path (and, for a campaign link, the utm source, medium
+  // and campaign). Nothing about the visitor. It never blocks or delays a link. A pressed link is labelled, in this order:
+  // its data-track label; "email" for a mailto: link; "download:<file name>" for a download or a .pdf .png .jpg .zip
+  // .docx .pptx link; "out:<host>" for a link to any site other than lessonshuffle.com, www, apps or cards.
+  // New links are counted automatically. A visit that arrives with utm_source or utm_campaign sends one "campaign" count.
   function initTrack() {
     if (!navigator.sendBeacon) return;
+    var own = ["lessonshuffle.com", "www.lessonshuffle.com", "apps.lessonshuffle.com", "cards.lessonshuffle.com"];
+
+    function post(body) {
+      try {
+        navigator.sendBeacon("https://lessonshuffle.com/api/track", new Blob([JSON.stringify(body)], { type: "text/plain" }));
+      } catch (err) { /* counting is optional */ }
+    }
+    function clean(text) {
+      return String(text).toLowerCase().replace(/[^a-z0-9:._\/-]/g, "-").replace(/^[^a-z0-9]+/, "").slice(0, 80);
+    }
+    function labelFor(link) {
+      var tag = link.getAttribute("data-track");
+      if (tag) return tag;
+      if (/^mailto:/i.test(link.getAttribute("href") || "")) return "email";
+      var url;
+      try { url = new URL(link.href, location.href); } catch (err) { return ""; }
+      if (!/^https?:$/.test(url.protocol)) return "";
+      if (link.hasAttribute("download") || /\.(pdf|png|jpg|zip|docx|pptx)$/i.test(url.pathname)) {
+        var file = url.pathname.split("/").pop() || "file";
+        try { file = decodeURIComponent(file); } catch (err) { /* keep the raw name */ }
+        return "download:" + file;
+      }
+      if (url.hostname !== location.hostname && own.indexOf(url.hostname) === -1) return "out:" + url.hostname;
+      return "";
+    }
     function send(event) {
       try {
-        var link = event.target.closest ? event.target.closest("a[data-track]") : null;
+        var link = event.target.closest ? event.target.closest("a") : null;
         if (!link) return;
-        navigator.sendBeacon(
-          "https://lessonshuffle.com/api/track",
-          new Blob([JSON.stringify({ e: link.getAttribute("data-track"), p: location.pathname })], { type: "text/plain" })
-        );
+        var label = clean(labelFor(link));
+        if (label) post({ e: label, p: location.pathname });
       } catch (err) { /* counting is optional */ }
     }
     document.addEventListener("click", send);
     document.addEventListener("auxclick", send);
+
+    try {
+      var q = new URLSearchParams(location.search);
+      var val = function (k) { return (q.get(k) || "").trim().toLowerCase().slice(0, 60); };
+      var s = val("utm_source"), m = val("utm_medium"), c = val("utm_campaign");
+      if (s || c) {
+        var u = {};
+        if (s) u.s = s;
+        if (m) u.m = m;
+        if (c) u.c = c;
+        post({ e: "campaign", p: location.pathname, u: u });
+      }
+    } catch (err) { /* counting is optional */ }
   }
 
   ready(function () {

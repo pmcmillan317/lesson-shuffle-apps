@@ -1,8 +1,9 @@
-/* Lesson Shuffle apps site. No dependencies, no cookies, no network calls.
+/* Lesson Shuffle apps site. No dependencies, no cookies. It sends one anonymous click count (the button's label and the page path, nothing about the visitor) when a button marked data-track is pressed.
    1) Adds the "js" class (CSS only hides .reveal elements when this class is present).
    2) Reveals .reveal elements once as they scroll into view.
    3) Closes the phone menu on link click, Escape and outside click.
    4) Opens the small coffee tip dialog (QR code and a button) from links marked data-coffee.
+   5) Counts clicks on links marked data-track (see initTrack).
    Everything works without this file: the menu is a plain <details>, and nothing is hidden. */
 (function () {
   "use strict";
@@ -152,9 +153,29 @@
     window.setTimeout(showAll, 4000);
   }
 
+  /* ---- Click counts ----------------------------------------------------------------------- */
+  // A link marked data-track="<label>" sends one anonymous count when pressed: the label and the page
+  // path, nothing about the visitor. It never blocks or delays the link.
+  function initTrack() {
+    if (!navigator.sendBeacon) return;
+    function send(event) {
+      try {
+        var link = event.target.closest ? event.target.closest("a[data-track]") : null;
+        if (!link) return;
+        navigator.sendBeacon(
+          "https://lessonshuffle.com/api/track",
+          new Blob([JSON.stringify({ e: link.getAttribute("data-track"), p: location.pathname })], { type: "text/plain" })
+        );
+      } catch (err) { /* counting is optional */ }
+    }
+    document.addEventListener("click", send);
+    document.addEventListener("auxclick", send);
+  }
+
   ready(function () {
     initMenu();
     initReveal();
     initCoffee();
+    initTrack();
   });
 })();

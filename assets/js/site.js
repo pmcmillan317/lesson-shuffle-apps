@@ -159,7 +159,19 @@
   // its data-track label; "email" for a mailto: link; "download:<file name>" for a download or a .pdf .png .jpg .zip
   // .docx .pptx link; "out:<host>" for a link to any site other than lessonshuffle.com, www, apps or cards.
   // New links are counted automatically. A visit that arrives with utm_source or utm_campaign sends one "campaign" count.
+  // A browser signed in to the stats page on lessonshuffle.com carries the cookie "ls_me=1" (set there for all
+  // three sites). That browser is Patrick's own, so it is never counted: no page view, no click counts.
+  // Page views come from Cloudflare Web Analytics (cookieless). Cloudflare does not add it to this site by itself,
+  // so it is loaded here, with the site token of the lessonshuffle.com Web Analytics site.
   function initTrack() {
+    if (/(^|;\s*)ls_me=1(;|$)/.test(document.cookie)) return;
+    try {
+      var cf = document.createElement("script");
+      cf.defer = true;
+      cf.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      cf.setAttribute("data-cf-beacon", '{"token": "62954193f2df41488aee0b697433e7d7"}');
+      document.head.appendChild(cf);
+    } catch (err) { /* counting is optional */ }
     if (!navigator.sendBeacon) return;
     var own = ["lessonshuffle.com", "www.lessonshuffle.com", "apps.lessonshuffle.com", "cards.lessonshuffle.com"];
 

@@ -1,0 +1,43 @@
+// Lesson Shuffle Rooms: the tiny relay behind classroom team games (Huddle Up).
+//
+// What this file does, in plain words:
+//   - Names the Worker "lesson-shuffle-rooms".
+//   - Puts it ONLY at https://rooms.lessonshuffle.com (no public workers.dev
+//     address, no preview addresses).
+//   - Gives each game room its own small in-memory "room object" (GameRoom).
+//
+// Privacy: Cloudflare's Workers Logs are switched off below, and the code never
+// logs anything. Please keep it that way. Student data must never be logged or stored.
+{
+  "name": "lesson-shuffle-rooms",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-07",
+
+  // No lesson-shuffle-rooms.<account>.workers.dev address, and no preview URLs.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  // Logging off, on purpose (see the note at the top).
+  "observability": { "enabled": false, "logs": { "enabled": false } },
+
+  // The deploy creates this custom domain automatically because
+  // lessonshuffle.com DNS is already on Cloudflare.
+  "routes": [
+    { "pattern": "rooms.lessonshuffle.com", "custom_domain": true }
+  ],
+
+  // One GameRoom object per room code. "ROOMS" is the name the code uses.
+  "durable_objects": {
+    "bindings": [
+      { "name": "ROOMS", "class_name": "GameRoom" }
+    ]
+  },
+
+  // "new_sqlite_classes" makes the room objects SQLite-backed, which is the
+  // kind that works on the free Workers plan. Rooms only ever store the
+  // teacher's random host key and a created time, and delete both when the
+  // room ends.
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["GameRoom"] }
+  ]
+}

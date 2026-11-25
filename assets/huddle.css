@@ -1,0 +1,205 @@
+/* Huddle Up: the teacher's game page (/huddle-up/host/) and the student page (/huddle-up/play/).
+   Builds on /style.css (tokens, buttons, header). No inline styles: progress bars are sized with the
+   --p custom property, which the scripts set through the CSSOM (allowed by the CSP). */
+
+/* Team colours, in HU.TEAMS order. All light enough for --ink-on-suit text. */
+.team-0 { --team: #6ca9d8; }  /* Blue Whales */
+.team-1 { --team: #80c783; }  /* Green Frogs */
+.team-2 { --team: #ffd54f; }  /* Gold Bees */
+.team-3 { --team: #e57373; }  /* Red Foxes */
+.team-4 { --team: #b39ddb; }  /* Purple Owls */
+.team-5 { --team: #ffb74d; }  /* Orange Tigers */
+.team-6 { --team: #4db6ac; }  /* Teal Turtles */
+.team-7 { --team: #f48fb1; }  /* Pink Flamingos */
+.team-8 { --team: #b0bec5; }  /* Silver Wolves */
+.team-9 { --team: #c5e1a5; }  /* Lime Geckos */
+
+/* Buttons and rows set their own display, so make sure the hidden attribute still wins. */
+.hu-host [hidden], .hu-play [hidden] { display: none !important; }
+
+.hu-nojs { margin: 2rem auto; font-weight: 600; text-align: center; }
+.hu-main { padding-block: 1.5rem 3rem; }
+.hu-h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin-bottom: .6rem; }
+.hu-h2 { font-size: clamp(1.2rem, 3vw, 1.5rem); margin-bottom: .6rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.hu-lede { font-size: 1.15rem; color: var(--muted); max-width: 46rem; }
+.hu-dim { color: var(--muted); }
+.hu-help { color: var(--muted); font-size: 1rem; margin: .2rem 0 .6rem; }
+.hu-label { font-weight: 600; margin: .8rem 0 .3rem; }
+.hu-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin-top: .9rem; }
+.hu-row p { margin: 0; }
+.hu-go-row { margin-top: 1.4rem; }
+.hu-big { min-height: 3.5rem; padding-inline: 2rem; font-size: 1.15rem; }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+.hu-conn { margin: 0 auto 1rem; max-width: 40rem; padding: .6rem 1rem; border-radius: .6rem; background: var(--yellow-soft); color: var(--ink); text-align: center; font-weight: 600; }
+.hu-pill { display: inline-block; padding: .1rem .7rem; border-radius: 999px; background: var(--blue-soft); color: var(--blue-ink); font: 600 .95rem/1.6 var(--body); }
+
+/* Cards and form parts */
+.hu-steps { display: grid; gap: 1.1rem; }
+.hu-card { margin: 0; padding: 1.1rem 1.25rem 1.25rem; border: 1px solid var(--rule); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); min-width: 0; }
+.hu-card legend { float: left; width: 100%; padding: 0; margin-bottom: .6rem; font: 400 1.3rem/1.2 var(--display); display: flex; align-items: center; gap: .6rem; }
+.hu-card legend + * { clear: both; }
+.hu-num { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--navy); color: #fff; font: 400 1rem/1 var(--display); }
+.hu-card label { display: block; font-weight: 600; margin: .7rem 0 .25rem; }
+.hu-card input[type=text], .hu-card textarea, .hu-card select, .pl-form input, .pl-submit input, .hu-inline select {
+  width: 100%; min-height: 2.9rem; padding: .55rem .75rem; border: 2px solid var(--rule); border-radius: .6rem;
+  background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.4 var(--body);
+}
+.hu-card textarea { min-height: 12rem; resize: vertical; font-size: 1rem; tab-size: 4; }
+.hu-card input:focus, .hu-card textarea:focus, .hu-card select:focus, .pl-form input:focus, .pl-submit input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 35%, transparent); }
+.hu-parse { margin: .5rem 0 0; font-weight: 500; }
+.hu-parse.hu-warn { color: var(--red-ink); }
+.hu-preview { list-style: none; display: grid; gap: .35rem; margin-top: .6rem; }
+.hu-preview li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: .2rem 1rem; padding: .45rem .7rem; border-radius: .5rem; background: var(--bg); border: 1px solid var(--rule); }
+.hu-preview li b { overflow-wrap: anywhere; }
+.hu-preview li span { overflow-wrap: anywhere; color: var(--muted); }
+.hu-preview .hu-more { display: block; color: var(--muted); border-style: dashed; }
+@media (max-width: 34rem) { .hu-preview li { grid-template-columns: 1fr; } }
+.hu-file { position: relative; overflow: hidden; }
+.hu-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.hu-file:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hu-saved ul { list-style: none; display: grid; gap: .2rem; }
+.hu-saved li { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; }
+.hu-link { min-height: 44px; padding: 0 .2rem; border: 0; background: none; color: var(--primary); font: 600 1rem/1.3 var(--body); text-decoration: underline; cursor: pointer; }
+.hu-x { min-width: 44px; min-height: 44px; border: 0; border-radius: 50%; background: none; color: var(--muted); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.hu-x:hover { background: var(--red-soft); color: var(--red-ink); }
+.hu-mini { min-height: 44px; padding: 0 .6rem; border: 1px solid var(--rule); border-radius: 999px; background: none; color: var(--muted); font: 500 .95rem/1 var(--body); cursor: pointer; }
+.hu-mini:hover { color: var(--ink); border-color: var(--primary); }
+
+.hu-modes { display: grid; gap: .55rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+.hu-card label.hu-mode { display: flex; gap: .7rem; align-items: flex-start; margin: 0; padding: .8rem .9rem; border: 2px solid var(--rule); border-radius: .8rem; font-weight: 400; cursor: pointer; }
+.hu-mode input { margin-top: .35rem; width: 1.15rem; height: 1.15rem; accent-color: var(--primary); flex: none; }
+.hu-mode b { display: block; font: 400 1.1rem/1.3 var(--display); margin-bottom: .2rem; }
+.hu-mode:has(input:checked) { border-color: var(--primary); background: var(--blue-soft); }
+.hu-mode:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.hu-grid { display: grid; gap: .3rem 1.2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); align-items: end; }
+.hu-grid > [hidden] { display: none; }
+.hu-check { display: flex; align-items: center; gap: .6rem; min-height: 2.9rem; }
+.hu-card .hu-check label { margin: 0; }
+.hu-check input { width: 1.3rem; height: 1.3rem; accent-color: var(--primary); }
+.hu-inline { display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; }
+.hu-inline select { width: auto; }
+
+/* Lobby: big code for the projector */
+.hu-join-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 1.6rem; border-radius: 1.2rem; background: var(--navy); color: #fff; }
+.hu-join-line { font: 400 clamp(1.3rem, 3.5vw, 2rem)/1.2 var(--body); margin: 0; }
+.hu-join-line b { font-family: var(--display); font-weight: 400; color: var(--yellow); overflow-wrap: anywhere; }
+.hu-join-sub { margin: .3rem 0 .2rem; font-size: 1.2rem; opacity: .85; }
+.hu-code { margin: 0; font: 400 clamp(3rem, 12vw, 6.5rem)/1 var(--display); letter-spacing: .06em; }
+.hu-qr { width: clamp(9rem, 22vw, 13rem); padding: .5rem; border-radius: .8rem; background: #fff; }
+.hu-qr svg { display: block; width: 100%; height: auto; }
+.hu-mode-line { margin: 1rem 0; font-size: 1.1rem; }
+.hu-lobby-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: start; }
+.hu-players { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; }
+.hu-players li { display: inline-flex; align-items: center; gap: .3rem; padding: .1rem .2rem .1rem .9rem; border-radius: 999px; background: var(--bg); border: 1px solid var(--rule); font-weight: 500; }
+.hu-players li.hu-off { opacity: .55; }
+.hu-subs { list-style: none; display: grid; gap: .5rem; margin-top: .8rem; }
+.hu-subs li { display: grid; gap: .4rem; padding: .6rem .8rem; border-radius: .6rem; border: 1px solid var(--rule); background: var(--bg); }
+.hu-subs li > div:first-child { display: grid; }
+.hu-subs b, .hu-subs span { overflow-wrap: anywhere; }
+.hu-subs .hu-row { margin: 0; }
+
+/* Teams */
+.hu-plan { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin: .4rem 0 1rem; }
+.hu-plan[hidden] { display: none; }
+.hu-plan-clock { font: 400 1.8rem/1 var(--display); }
+.hu-team-grid { list-style: none; display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); }
+.hu-team { padding: 1rem 1.1rem; border-radius: 1rem; background: var(--team); color: var(--ink-on-suit); border: 3px solid var(--cut); box-shadow: var(--shadow); }
+.hu-team h3 { font-size: 1.35rem; margin-bottom: .4rem; }
+.hu-team ul { list-style: none; }
+.hu-team li { font-weight: 500; }
+.hu-team.hu-cons { opacity: .8; }
+.hu-tag { display: inline-block; margin: 0 0 .4rem; padding: 0 .6rem; border-radius: 999px; background: rgba(255, 255, 255, .6); font-size: .95rem; font-weight: 600; }
+
+/* The board */
+.hu-game-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.hu-game-head p { margin: 0; }
+.hu-clock { font: 400 clamp(2rem, 6vw, 3.4rem)/1 var(--display); }
+.hu-paused { margin: 1rem 0; padding: 1rem; border-radius: .8rem; background: var(--yellow); color: var(--ink-on-suit); font: 400 1.6rem/1.2 var(--display); text-align: center; }
+.hu-board { display: grid; gap: 1.4rem; margin-top: 1.2rem; }
+.hu-heat-label { font-size: 1.15rem; margin-bottom: .5rem; }
+.hu-heat-cons { opacity: .85; }
+.hu-lanes { list-style: none; display: grid; gap: .7rem; }
+.hu-lane { display: grid; grid-template-columns: minmax(8rem, 16rem) minmax(0, 1fr) auto; align-items: center; gap: .4rem 1rem; padding: .55rem .8rem; border-radius: .9rem; background: var(--surface); border: 1px solid var(--rule); }
+.hu-lane-name { font: 400 clamp(1.2rem, 2.4vw, 1.6rem)/1.2 var(--display); display: flex; align-items: center; gap: .5rem; }
+.hu-lane-name::before { content: ""; flex: none; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--team); border: 2px solid var(--cut); box-shadow: 0 0 0 1px var(--rule); }
+.hu-lane-score { min-width: 5.5em; text-align: right; font-weight: 600; font-size: clamp(1.15rem, 2.2vw, 1.5rem); white-space: nowrap; }
+.hu-lane-best { grid-column: 2 / -1; color: var(--muted); font-size: .95rem; }
+.hu-lane.hu-done { border-color: var(--team); box-shadow: 0 0 0 3px var(--team); }
+.hu-bar { height: clamp(1.6rem, 3.5vw, 2.6rem); }
+.hu-bar, .pl-track { position: relative; display: block; min-height: 1.6rem; border-radius: 999px; background: var(--bg); border: 1px solid var(--rule); overflow: hidden; }
+.hu-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--p, 0) * 100%); background: var(--team, var(--primary)); border-radius: inherit; transition: width .4s var(--ease); }
+@media (max-width: 34rem) {
+  .hu-lane { grid-template-columns: 1fr auto; }
+  .hu-lane .hu-bar { grid-column: 1 / -1; grid-row: 2; }
+  .hu-lane-best { grid-column: 1 / -1; }
+}
+
+/* Results */
+.hu-res-teams { list-style: none; counter-reset: place; display: grid; gap: .5rem; margin: 1rem 0 1.4rem; }
+.hu-res-teams li { counter-increment: place; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .7rem 1rem; border-radius: .8rem; background: var(--team); color: var(--ink-on-suit); border: 3px solid var(--cut); }
+.hu-res-teams li::before { content: counter(place); display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgba(255, 255, 255, .7); font: 400 1rem/1 var(--display); }
+.hu-res-teams b { font: 400 1.2rem/1.2 var(--display); }
+
+/* The teacher's page has no footer, so keep the header plain. */
+.hu-host .hu-nav a { font-weight: 600; }
+
+/* ================================================================================================
+   Student page
+   ================================================================================================ */
+.hu-play { background: var(--bg); }
+.pl-main { min-height: 100dvh; display: flex; flex-direction: column; }
+.pl-join { width: min(26rem, 100%); margin: auto; padding: 2rem 16px; text-align: center; }
+.pl-logo { width: 4.5rem; height: auto; margin: 0 auto .6rem; }
+.pl-form { display: grid; gap: .3rem; text-align: left; }
+.pl-form label { font-weight: 600; margin-top: .6rem; }
+.pl-code-box { text-transform: uppercase; letter-spacing: .2em; font-family: var(--display) !important; font-size: 1.6rem !important; text-align: center; }
+.pl-nick-row { display: flex; gap: .5rem; }
+.pl-nick-row input { flex: 1; min-width: 0; }
+.pl-dim { color: var(--muted); font-size: 1rem; margin: .2rem 0; }
+.pl-err { color: var(--red-ink); font-weight: 600; min-height: 1.5rem; margin: .3rem 0; }
+.pl-form .btn { margin-top: .4rem; }
+
+.pl-app { position: relative; flex: 1; display: flex; flex-direction: column; padding: 0 16px 1.5rem; }
+.pl-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .2rem 1rem; margin: 0 -16px; padding: .7rem 16px; background: var(--team, var(--navy)); color: var(--ink-on-suit); }
+.pl-app:not([class*="team-"]) .pl-top { color: #fff; }
+.pl-top p { margin: 0; }
+.pl-team-name { font: 400 1.3rem/1.2 var(--display); }
+.pl-me { font-weight: 600; }
+.pl-progress { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .8rem; margin-top: .8rem; }
+.pl-progress[hidden] { display: none; }
+.pl-score { font-weight: 600; white-space: nowrap; }
+.pl-body { flex: 1; display: flex; flex-direction: column; gap: 1rem; padding-top: 1rem; max-width: 46rem; width: 100%; margin-inline: auto; }
+.pl-msg { margin: auto 0; text-align: center; padding: 1rem 0; }
+.pl-msg h2 { font-size: clamp(1.6rem, 6vw, 2.3rem); margin-bottom: .6rem; }
+.pl-msg p { font-size: 1.15rem; }
+.pl-eyebrow { margin: 0 0 .3rem; font: 600 .95rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pl-mates b { font-weight: 600; }
+.pl-rule { padding: .8rem 1rem; border-radius: .8rem; background: var(--surface); border: 1px solid var(--rule); }
+.pl-count { margin: auto; font: 400 clamp(6rem, 30vw, 11rem)/1 var(--display); }
+.pl-prompt { padding: 1rem 1.1rem; border-radius: 1rem; background: var(--surface); border: 3px solid var(--team, var(--rule)); box-shadow: var(--shadow); }
+.pl-prompt-text { margin: 0; font: 500 clamp(1.25rem, 4.5vw, 1.7rem)/1.35 var(--body); overflow-wrap: anywhere; }
+.pl-tiles { list-style: none; display: grid; gap: .7rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); }
+.pl-tile { width: 100%; height: 100%; min-height: 4.5rem; padding: .7rem .8rem; border: 2px solid var(--rule); border-radius: .9rem; background: var(--surface); color: var(--ink); font: 600 1.15rem/1.3 var(--body); overflow-wrap: anywhere; cursor: pointer; box-shadow: var(--shadow); transition: transform .1s, border-color .1s; }
+.pl-tile.pl-long { font-size: 1rem; font-weight: 500; }
+.pl-tile:hover:not(:disabled) { border-color: var(--primary); }
+.pl-tile:active:not(:disabled) { transform: scale(.97); }
+.pl-tile:disabled { cursor: default; opacity: .7; }
+.pl-tile.pl-picked { border-color: var(--primary); opacity: 1; }
+.pl-frozen .pl-tile { opacity: .35; }
+.pl-freeze { text-align: center; font-weight: 600; color: var(--red-ink); margin: 0; }
+.pl-none { text-align: center; font-size: 1.1rem; margin: 1.5rem 0; }
+.pl-submit { display: grid; gap: .25rem; padding: 1rem 1.1rem; border-radius: 1rem; background: var(--surface); border: 1px solid var(--rule); }
+.pl-submit h3 { font-size: 1.2rem; }
+.pl-submit label { font-weight: 600; margin-top: .4rem; }
+.pl-submit .btn { margin-top: .6rem; justify-self: start; }
+
+.pl-flash { position: fixed; inset: auto 16px 1.5rem; z-index: 10; padding: 1rem 1.2rem; border-radius: 1rem; text-align: center; box-shadow: var(--shadow-lift); color: var(--ink-on-suit); cursor: pointer; }
+.pl-flash[hidden] { display: none; }
+.pl-flash p { margin: .2rem 0; overflow-wrap: anywhere; }
+.pl-flash-right { background: var(--green); }
+.pl-flash-wrong { background: var(--yellow); }
+.pl-flash-big { font: 400 1.6rem/1.2 var(--display); }
+@media (prefers-reduced-motion: no-preference) {
+  .pl-flash:not([hidden]) { animation: pl-pop .25s var(--ease); }
+  @keyframes pl-pop { from { transform: translateY(1rem) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+}

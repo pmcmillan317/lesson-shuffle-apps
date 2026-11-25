@@ -50,6 +50,7 @@
       code: null, key: null,
       phase: "setup",                // setup | lobby | teams | countdown | play | paused | results
       title: "", raw: "", pairs: [],
+      pics: {},                      // pictures the teacher added: lower-case term -> small JPEG data URL
       settings: {
         mode: "classic", target: 12, teams: 0, ask: "def", penalty: "point", names: "typed",
         shuffle: true, playoffStyle: "classic"
@@ -72,7 +73,14 @@
 
   function save() {
     clearTimeout(timers.save);
-    timers.save = setTimeout(function () { HU.store.set("sessionStorage", GAME_KEY, S); }, 150);
+    timers.save = setTimeout(function () {
+      try { sessionStorage.setItem(GAME_KEY, JSON.stringify(S)); }
+      catch (e) {
+        // Too full with pictures: keep the game itself so a refresh still picks up where it left off.
+        var lite = Object.assign({}, S, { pics: {} });
+        HU.store.set("sessionStorage", GAME_KEY, lite);
+      }
+    }, 150);
   }
 
   /* ================================================================================================
@@ -205,6 +213,9 @@
       v.seq = team.seq;
       v.ask = cur.ask;
       v.prompt = cur.ask === "def" ? pair.def : pair.term;
+      // A picture goes with the meaning side, so it shows when students are finding the term.
+      if (cur.ask === "def" && S.pics[pair.term.toLowerCase()] && S.pics[pair.term.toLowerCase()].length <= PIC_BYTES) v.pic = S.pics[pair.term.toLowerCase()];
+      if (cur.again) v.again = true;
       v.tiles = (cur.deal[pid] || []).map(function (id) {
         var q = S.pairs[id];
         return { id: id, text: cur.ask === "def" ? q.term : q.def };
@@ -406,6 +417,7 @@
       t.score = 0; t.seq = 0; t.cur = null; t.done = false; t.doneAt = 0; t.frozen = {}; t.place = 0;
       t.queue = HU.shuffle(S.pairs.map(function (p) { return p.id; }));
       t.qi = 0;
+      t.retry = [];
     });
     S.misses = {};
   }
@@ -420,6 +432,13 @@
       team.qi = 0;
     }
     var id = team.queue[team.qi++];
+    // Second chance: a missed match comes back a few prompts later, so the team can get it right.
+    var again = false;
+    if (team.retry && team.retry.length && team.seq >= team.retry[0].at) {
+      team.qi--;
+      id = team.retry.shift().id;
+      again = true;
+    }
     var ask = S.settings.ask === "mix" ? (HU.randomInt(2) ? "def" : "term") : S.settings.ask;
     var pair = S.pairs[id];
     var answerText = function (p) { return (ask === "def" ? p.term : p.def).toLowerCase(); };
@@ -435,7 +454,7 @@
       options.push(others[i].id);
     }
     team.seq++;
-    team.cur = { pair: id, ask: ask, options: HU.shuffle(options), deal: {} };
+    team.cur = { pair: id, ask: ask, options: HU.shuffle(options), deal: {}, again: again };
     deal(team);
   }
 
@@ -480,6 +499,7 @@
     clearInterval(timers.countdown);
     timers.countdown = setInterval(function () {
       S.countdown--;
+      sound(S.countdown <= 0 ? "go" : "tick");
       if (S.countdown <= 0) {
         clearInterval(timers.countdown);
         startPlay();
@@ -537,13 +557,18 @@
         team.doneAt = elapsed();
         team.place = heat.teams.filter(function (i) { return S.teams[i].done; }).length;
         sendTo(team.members, flash);
+        sound("finish");
         teamFinished(heat, ti);
         return;
       }
       sendTo(team.members, flash);
+      sound("match");
       nextPrompt(team);
     } else {
       S.misses[team.cur.pair] = (S.misses[team.cur.pair] || 0) + 1;
+      if (!team.retry) team.retry = [];
+      if (!team.retry.some(function (r) { return r.id === team.cur.pair; })) team.retry.push({ id: team.cur.pair, at: team.seq + 3 });
+      sound("miss");
       if (S.settings.penalty === "zero") team.score = 0;
       else if (S.settings.penalty === "point") team.score = Math.max(0, team.score - 1);
       team.frozen[pid] = now + FREEZE_MS;
@@ -660,12 +685,43 @@
     clearInterval(timers.tick);
     clearInterval(timers.countdown);
     clearInterval(timers.plan);
-    var keep = { title: S.title, raw: S.raw, pairs: S.pairs, settings: S.settings };
+    var keep = { title: S.title, raw: S.raw, pairs: S.pairs, settings: S.settings, pics: S.pics };
     S = freshState();
-    S.title = keep.title; S.raw = keep.raw; S.pairs = keep.pairs; S.settings = keep.settings;
+    S.title = keep.title; S.raw = keep.raw; S.pairs = keep.pairs; S.settings = keep.settings; S.pics = keep.pics || {};
     HU.store.remove("sessionStorage", GAME_KEY);
     setConn("none");
     render();
+  }
+
+  /* ================================================================================================
+     Sound (the teacher's board only; students' devices stay quiet)
+     ================================================================================================ */
+  var audio = null;
+  var muted = HU.store.get("localStorage", "huddle.muted") === true;
+  function sound(kind) {
+    if (muted || !window.AudioContext) return;
+    try {
+      if (!audio) audio = new AudioContext();
+      if (audio.state === "suspended") audio.resume();
+      var notes = { match: [[660, 0, 0.09]], miss: [[220, 0, 0.16]], tick: [[520, 0, 0.12]], go: [[784, 0, 0.25]],
+        finish: [[523, 0, 0.14], [659, 0.13, 0.14], [784, 0.26, 0.3]] }[kind] || [];
+      notes.forEach(function (n) {
+        var o = audio.createOscillator(), g = audio.createGain(), t = audio.currentTime + n[1];
+        o.type = kind === "miss" ? "triangle" : "sine";
+        o.frequency.value = n[0];
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(kind === "match" ? 0.08 : 0.16, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + n[2]);
+        o.connect(g); g.connect(audio.destination);
+        o.start(t); o.stop(t + n[2] + 0.05);
+      });
+    } catch (e) { /* no sound, no problem */ }
+  }
+  function renderMute() {
+    document.querySelectorAll(".hu-mute").forEach(function (b) {
+      b.textContent = muted ? "Sound off" : "Sound on";
+      b.setAttribute("aria-pressed", muted ? "false" : "true");
+    });
   }
 
   /* ================================================================================================
@@ -773,6 +829,105 @@
       list.appendChild(h("li", null, h("b", { text: p.term }), h("span", { text: p.def })));
     });
     if (n > 6) list.appendChild(h("li", { class: "hu-more", text: "and " + (n - 6) + " more" }));
+    var picCount = res.pairs.filter(function (p) { return S.pics[p.term.toLowerCase()]; }).length;
+    $("#hu-pics-toggle").textContent = picCount ? "Pictures (" + picCount + ")" : "Add pictures";
+    if (!$("#hu-pics").hidden) renderPics();
+  }
+
+  /* ---- Pictures ------------------------------------------------------------------------------- */
+  // The teacher picks an image file for a match. It is shrunk in this browser to a small JPEG, kept with the
+  // list, and shown on students' screens with the meaning. Nothing is uploaded anywhere.
+  var PIC_MAX = 480, PIC_LIMIT = 60, PIC_BYTES = 150000; // the relay takes teacher messages up to 192 KB
+  function renderPics() {
+    var list = HU.clear($("#hu-pics-list"));
+    S.pairs.forEach(function (p) {
+      var key = p.term.toLowerCase();
+      var pic = S.pics[key];
+      var input = h("input", { type: "file", accept: "image/*", class: "hu-pic-input", "aria-label": "Choose a picture for " + p.term });
+      input.addEventListener("change", function () {
+        var file = input.files && input.files[0];
+        if (file) addPic(key, file);
+      });
+      list.appendChild(h("li", null,
+        pic ? h("img", { src: pic, alt: "Picture for " + p.term, width: "64", height: "64", class: "hu-pic-thumb" }) : h("span", { class: "hu-pic-thumb hu-pic-empty", "aria-hidden": "true" }),
+        h("span", { class: "hu-pic-term" }, h("b", { text: p.term }), h("span", { class: "hu-dim", text: p.def })),
+        h("label", { class: "btn btn-ghost btn-sm hu-file" }, pic ? "Change" : "Add picture", input),
+        pic ? h("button", { type: "button", class: "hu-x", "aria-label": "Remove the picture for " + p.term, onclick: function () { delete S.pics[key]; renderParse(); save(); } }, "\u00d7") : null
+      ));
+    });
+  }
+
+  function addPic(key, file) {
+    var note = $("#hu-pics-note");
+    if (!/^image\//.test(file.type)) { note.textContent = "That file is not a picture."; return; }
+    if (!S.pics[key] && Object.keys(S.pics).length >= PIC_LIMIT) { note.textContent = "That is the most pictures one list can hold (" + PIC_LIMIT + ")."; return; }
+    // Read the file as a data address (the page's security rules allow data: pictures, not blob: ones).
+    var reader = new FileReader();
+    reader.onerror = function () { note.textContent = "That picture could not be opened. Try a JPG or PNG."; };
+    reader.onload = function () { shrink(String(reader.result || "")); };
+    reader.readAsDataURL(file);
+    function shrink(url) {
+    var img = new Image();
+    img.onload = function () {
+      var scale = Math.min(1, PIC_MAX / Math.max(img.naturalWidth, img.naturalHeight));
+      var c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      c.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      var g = c.getContext("2d");
+      g.fillStyle = "#fff";
+      g.fillRect(0, 0, c.width, c.height);
+      g.drawImage(img, 0, 0, c.width, c.height);
+      var data = c.toDataURL("image/jpeg", 0.72);
+      if (data.length > 90000) data = c.toDataURL("image/jpeg", 0.5);
+      if (data.length > PIC_BYTES) { note.textContent = "That picture is too detailed to send. Try a simpler one."; return; }
+      S.pics[key] = data;
+      note.textContent = "";
+      renderParse();
+      save();
+    };
+    img.onerror = function () { note.textContent = "That picture could not be opened. Try a JPG or PNG."; };
+    img.src = url;
+    }
+  }
+
+  function picsFor(pairs) {
+    var out = {};
+    pairs.forEach(function (p) { var k = p.term.toLowerCase(); if (S.pics[k]) out[k] = S.pics[k]; });
+    return out;
+  }
+
+  /* ---- Share a list as a link ----------------------------------------------------------------- */
+  // The list rides in the part of the address after #, which browsers never send to a server.
+  // Pictures stay out of the link (they would make it far too long).
+  function shareLink() {
+    var res = parsePairs(S.raw);
+    if (!res.pairs.length) return;
+    var json = JSON.stringify({ t: (S.title || "").slice(0, 80), r: pairsToText(res.pairs) });
+    var bytes = new TextEncoder().encode(json), bin = "";
+    bytes.forEach(function (b) { bin += String.fromCharCode(b); });
+    var code = btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    var link = location.origin + "/huddle-up/host/#list=" + code;
+    var note = $("#hu-save-note");
+    function done(ok) {
+      note.textContent = ok ? "Link copied. Anyone who opens it gets this list (without pictures)." : "Copy this link: " + link;
+      setTimeout(function () { note.textContent = ""; }, ok ? 4000 : 20000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { done(true); }, function () { done(false); });
+    else done(false);
+  }
+
+  function listFromHash() {
+    var m = /^#list=([A-Za-z0-9_-]+)$/.exec(location.hash || "");
+    if (!m) return null;
+    try {
+      var b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      var bin = atob(b64), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      var obj = JSON.parse(new TextDecoder().decode(bytes));
+      if (!obj || typeof obj.r !== "string") return null;
+      return { title: String(obj.t || "").slice(0, 80), raw: obj.r.slice(0, 60000) };
+    } catch (e) { return null; }
   }
 
   function renderSaved() {
@@ -794,6 +949,7 @@
     if (!set) return;
     S.title = set.title || "";
     S.raw = set.raw || "";
+    if (set.pics) Object.keys(set.pics).forEach(function (k) { S.pics[k] = set.pics[k]; });
     renderSetup();
     save();
   }
@@ -810,11 +966,18 @@
     var res = parsePairs(S.raw);
     if (!res.pairs.length) return;
     var sets = savedSets().filter(function (s) { return s.title !== title; });
-    sets.unshift({ title: title, raw: pairsToText(res.pairs), count: res.pairs.length, saved: Date.now() });
+    var pics = picsFor(res.pairs);
+    sets.unshift({ title: title, raw: pairsToText(res.pairs), count: res.pairs.length, saved: Date.now(), pics: pics });
     writeSets(sets.slice(0, 40));
     S.title = title;
     var note = $("#hu-save-note");
-    note.textContent = "Saved in this browser.";
+    var check = savedSets();
+    if (!check.length || check[0].title !== title) {
+      // Browser storage is full (pictures take room). Save the words, and say so.
+      sets[0].pics = {};
+      writeSets(sets.slice(0, 40));
+      note.textContent = "Saved the words in this browser. The pictures did not fit, so add them again next time.";
+    } else note.textContent = "Saved in this browser.";
     setTimeout(function () { note.textContent = ""; }, 2500);
     renderSaved();
   }
@@ -1112,6 +1275,17 @@
       reader.readAsText(file);
     });
     $("#hu-save").addEventListener("click", saveSet);
+    $("#hu-share").addEventListener("click", shareLink);
+    $("#hu-pics-toggle").addEventListener("click", function () {
+      var panel = $("#hu-pics");
+      panel.hidden = !panel.hidden;
+      $("#hu-pics-toggle").setAttribute("aria-expanded", panel.hidden ? "false" : "true");
+      if (!panel.hidden) renderPics();
+    });
+    document.querySelectorAll(".hu-mute").forEach(function (b) {
+      b.addEventListener("click", function () { muted = !muted; HU.store.set("localStorage", "huddle.muted", muted); renderMute(); if (!muted) sound("match"); });
+    });
+    renderMute();
     document.querySelectorAll("input[name=hu-mode]").forEach(function (r) {
       r.addEventListener("change", function () { readSettings(); renderSetup(); save(); });
     });
@@ -1165,6 +1339,13 @@
     $("#hu-app").hidden = false;
     var saved = HU.store.get("sessionStorage", GAME_KEY);
     S = saved && saved.v === 1 ? saved : freshState();
+    if (!S.pics) S.pics = {};
+    // A shared list link (#list=...) fills in the terms, unless a game is already running in this tab.
+    var shared = listFromHash();
+    if (shared) {
+      if (!S.code) { S.raw = shared.raw; S.title = shared.title; }
+      try { history.replaceState(null, "", location.pathname); } catch (e) { /* ignore */ }
+    }
     if (S.phase === "countdown") S.phase = "teams";
     S.planEndsAt = 0;
     Object.keys(S.players).forEach(function (pid) { S.players[pid].online = false; });

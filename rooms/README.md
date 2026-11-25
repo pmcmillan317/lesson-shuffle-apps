@@ -50,7 +50,7 @@ Errors arrive as `{"t":"error","code":...}` followed by a close:
 | (rate) | 4008 | a player sent more than 40 messages in 10 seconds |
 | (too big) | 1009 | a message was over its size limit |
 
-Limits: player messages up to 2048 bytes, host messages up to 32768 bytes, all JSON objects. Anything else is ignored.
+Limits: player messages up to 2048 bytes, host messages up to 196608 bytes (192 KB, so a question can carry one small picture), all JSON objects. Anything else is ignored.
 
 ## One-time setup (owner)
 

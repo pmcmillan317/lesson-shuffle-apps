@@ -12,7 +12,7 @@ const LOCAL_RE = /^http:\/\/(localhost|127\.0\.0\.1):\d{1,5}$/;
 
 const MAX_PLAYERS = 80;
 const PLAYER_MAX_BYTES = 2048;
-const HOST_MAX_BYTES = 32768;
+const HOST_MAX_BYTES = 196608; // room for one small picture with a question
 const RATE_LIMIT = 40;
 const RATE_WINDOW_MS = 10_000;
 const ROOM_MAX_MS = 4 * 60 * 60 * 1000;

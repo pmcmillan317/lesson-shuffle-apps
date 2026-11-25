@@ -28,6 +28,15 @@ await host.click("#hu-sample");
 await host.check(`input[name=hu-mode][value=${MODE}]`);
 if (MODE !== "eleven") await host.selectOption("#hu-target", "6");
 if (process.env.TEAMS) await host.selectOption("#hu-teamcount", process.env.TEAMS);
+// Put a picture on every match (a screenshot of the page stands in for a photo).
+const photo = await host.screenshot({ clip: { x: 0, y: 0, width: 900, height: 600 } });
+await host.click("#hu-pics-toggle");
+const picCount = await host.$$eval(".hu-pic-input", (els) => els.length);
+for (let i = 0; i < picCount; i++) {
+  await host.locator(".hu-pic-input").nth(i).setInputFiles({ name: "photo.png", mimeType: "image/png", buffer: photo });
+  await host.waitForFunction((n) => document.querySelectorAll(".hu-pic-thumb[src]").length > n, i);
+}
+console.log("pictures added", picCount);
 await host.screenshot({ path: join(SHOTS, "1-setup.png"), fullPage: true });
 await host.click("#hu-open");
 await host.waitForFunction(() => document.querySelector("#hu-code").textContent.trim().length === 7);
@@ -77,6 +86,7 @@ await kids[0].screenshot({ path: join(SHOTS, "4-kid-play.png") });
 
 // One wrong answer on purpose, then everyone plays it straight.
 let wrongDone = false;
+let sawPic = false, sawAgain = false;
 let steps = 0;
 async function playRound() {
   const deadline = Date.now() + (MODE === "eleven" ? 120000 : 60000);
@@ -85,6 +95,8 @@ async function playRound() {
     for (const page of kids) {
       const prompt = await page.$(".pl-prompt-text");
       if (!prompt) continue;
+      if (!sawPic && await page.$(".pl-pic img")) { sawPic = true; await page.click(".pl-pic").catch(() => {}); await page.screenshot({ path: join(SHOTS, "4-kid-picture.png") }); }
+      if (!sawAgain && await page.$(".pl-again")) sawAgain = true;
       const text = ((await prompt.textContent().catch(() => "")) || "").trim();
       const want = byDef[text];
       const tiles = await page.$$(".pl-tile:not([disabled])");
@@ -125,6 +137,7 @@ if (MODE === "playoffs") {
 const done = await host.isVisible("#hu-results");
 await host.screenshot({ path: join(SHOTS, "6-results.png"), fullPage: true });
 await kids[0].screenshot({ path: join(SHOTS, "6-kid-results.png") });
+console.log("saw picture:", sawPic, "| saw second chance:", sawAgain);
 console.log("results shown:", done, "| taps:", steps, "|", (await host.textContent("#hu-res-head")).trim());
 
 // Refresh a student mid-room: they keep their seat and name.
@@ -141,4 +154,4 @@ await kids[0].waitForSelector("text=The game is over.", { timeout: 8000 });
 console.log("close room reaches students: true");
 console.log(errors.length ? "ERRORS:\n" + errors.join("\n") : "no page errors");
 await browser.close();
-process.exit(done && !errors.length && before === after ? 0 : 1);
+process.exit(done && sawPic && !errors.length && before === after ? 0 : 1);

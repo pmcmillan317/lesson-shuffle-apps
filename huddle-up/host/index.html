@@ -61,9 +61,16 @@
           <button id="hu-flip" class="btn btn-ghost btn-sm" type="button">Swap the columns</button>
           <button id="hu-sample" class="btn btn-ghost btn-sm" type="button">Try a sample list</button>
           <button id="hu-clear" class="btn btn-ghost btn-sm" type="button">Clear</button>
+          <button id="hu-pics-toggle" class="btn btn-ghost btn-sm" type="button" aria-expanded="false" aria-controls="hu-pics">Add pictures</button>
+        </div>
+        <div id="hu-pics" class="hu-pics" hidden>
+          <p class="hu-help">Add a picture to any match. Students see it with the meaning, so it helps with science diagrams, maps, art and early readers. Pictures are shrunk and kept in this browser, and only go to students' screens during the game.</p>
+          <ul id="hu-pics-list" class="hu-pics-list" role="list"></ul>
+          <p id="hu-pics-note" class="hu-dim" role="status"></p>
         </div>
         <div class="hu-row">
           <button id="hu-save" class="btn btn-ghost btn-sm" type="button">Save this list in this browser</button>
+          <button id="hu-share" class="btn btn-ghost btn-sm" type="button">Copy a share link</button>
           <span id="hu-save-note" class="hu-dim" role="status"></span>
         </div>
         <div id="hu-saved" class="hu-saved" hidden>
@@ -159,6 +166,7 @@
     </div>
     <div class="hu-row">
       <button id="hu-edit" class="btn btn-ghost btn-sm" type="button">Change the terms or the way to play</button>
+      <button class="btn btn-ghost btn-sm hu-mute" type="button" aria-pressed="true">Sound on</button>
       <button class="btn btn-ghost btn-sm hu-close" type="button">End and close the room</button>
     </div>
   </section>
@@ -195,6 +203,7 @@
     <div class="hu-row">
       <button id="hu-pause" class="btn btn-ghost btn-sm" type="button">Pause</button>
       <button id="hu-end" class="btn btn-ghost btn-sm" type="button">End the round</button>
+      <button class="btn btn-ghost btn-sm hu-mute" type="button" aria-pressed="true">Sound on</button>
     </div>
   </section>
 

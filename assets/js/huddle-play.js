@@ -148,17 +148,30 @@
   }
 
   function paintPlay(body, v) {
+    var pic = null;
+    if (v.pic && /^data:image\/jpeg;base64,/.test(v.pic)) {
+      // Tap the picture to see it bigger, tap again to shrink it.
+      pic = h("button", { type: "button", class: "pl-pic", "aria-pressed": "false", "aria-label": "Make the picture bigger" },
+        h("img", { src: v.pic, alt: "A picture that goes with this meaning" }));
+      pic.addEventListener("click", function () {
+        var big = pic.classList.toggle("pl-pic-big");
+        pic.setAttribute("aria-pressed", big ? "true" : "false");
+        pic.setAttribute("aria-label", big ? "Make the picture smaller" : "Make the picture bigger");
+      });
+    }
     body.appendChild(h("div", { class: "pl-prompt" },
-      h("p", { class: "pl-eyebrow", text: v.ask === "def" ? "Who has the term for..." : "Who has the meaning of..." }),
-      h("p", { class: "pl-prompt-text", "aria-live": "polite", text: v.prompt || "" })
+      h("p", { class: "pl-eyebrow" }, v.ask === "def" ? "Who has the term for..." : "Who has the meaning of...",
+        v.again ? h("span", { class: "pl-again", text: "Second chance" }) : null),
+      h("p", { class: "pl-prompt-text", "aria-live": "polite", text: v.prompt || "" }),
+      pic
     ));
     if (!v.tiles || !v.tiles.length) {
       body.appendChild(h("p", { class: "pl-dim pl-none", text: "No answers on your screen this time. Help your team find it!" }));
       return;
     }
     var grid = h("ul", { class: "pl-tiles", role: "list" });
-    v.tiles.forEach(function (tile) {
-      var b = h("button", { type: "button", class: "pl-tile" + (tile.text.length > 60 ? " pl-long" : "") }, tile.text);
+    v.tiles.forEach(function (tile, i) {
+      var b = h("button", { type: "button", class: "pl-tile" + (tile.text.length > 60 ? " pl-long" : ""), "aria-keyshortcuts": i < 9 ? String(i + 1) : null }, tile.text);
       b.addEventListener("click", function () {
         if (b.disabled) return;
         grid.querySelectorAll("button").forEach(function (x) { x.disabled = true; });
@@ -204,6 +217,15 @@
     $("#pl-nojs").hidden = true;
     screen("#pl-join");
     $("#pl-flash").addEventListener("click", function () { $("#pl-flash").hidden = true; });
+    // On a laptop, the number keys 1 to 9 tap the answers in order.
+    document.addEventListener("keydown", function (ev) {
+      if (!last || last.phase !== "play" || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+      var t = ev.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (!/^[1-9]$/.test(ev.key)) return;
+      var tile = document.querySelectorAll("#pl-body .pl-tile")[Number(ev.key) - 1];
+      if (tile && !tile.disabled) { ev.preventDefault(); tile.click(); }
+    });
 
     var codeBox = $("#pl-code"), nameBox = $("#pl-nick");
     var fromUrl = HU.cleanCode(new URLSearchParams(location.search).get("code"));

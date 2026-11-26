@@ -1,0 +1,34 @@
+// Check the Huddle Up demo page: one tab with the teacher screen and student phones.
+// Needs the relay (`npm run dev` in /rooms) and the site at http://localhost:4195. Run: node rooms/test/demo.e2e.mjs
+import { createRequire } from "node:module";
+const { chromium } = createRequire(import.meta.url)("playwright");
+import { mkdirSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+const BASE = process.env.BASE || "http://localhost:4195";
+const SHOTS = process.env.SHOTS || join(tmpdir(), "huddle-demo-shots");
+mkdirSync(SHOTS, { recursive: true });
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
+const errors = [];
+page.on("pageerror", (e) => errors.push(e.message));
+page.on("console", (m) => { if (m.type() === "error" && !/TUNNEL|cloudflareinsights|lessonshuffle.com\/api/.test(m.text())) errors.push(m.text()); });
+await page.goto(BASE + "/huddle-up/demo/");
+const host = page.frameLocator("#dm-host");
+await host.locator("#hu-sample").click();
+await host.locator("#hu-open").click();
+await page.waitForFunction(() => document.querySelectorAll(".dm-frame").length === 4, null, { timeout: 15000 });
+await host.locator("#hu-players li").nth(3).waitFor({ timeout: 15000 });
+console.log("players in lobby:", await host.locator("#hu-players li").count());
+await page.screenshot({ path: join(SHOTS, "1-lobby.png") });
+await host.locator("#hu-start").click();
+await page.waitForTimeout(800);
+console.log("teams:", await host.locator("#hu-team-grid > li").count());
+await page.screenshot({ path: join(SHOTS, "2-teams.png") });
+await host.locator("#hu-go").click();
+await page.frameLocator(".dm-frame >> nth=0").locator(".pl-tile").first().waitFor({ timeout: 15000 });
+await page.waitForTimeout(500);
+await page.screenshot({ path: join(SHOTS, "3-play.png") });
+console.log(errors.length ? "ERRORS:\n" + errors.join("\n") : "no page errors");
+await browser.close();
+process.exit(errors.length ? 1 : 0);

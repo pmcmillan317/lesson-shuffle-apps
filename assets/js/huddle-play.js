@@ -13,6 +13,9 @@
   var flashTimer = null;
   var freezeTimer = null;
   var hostUp = true;
+  // On the demo page several student screens share one browser tab, so each seat keeps its own key.
+  var seat = /^[1-9]$/.test(new URLSearchParams(location.search).get("seat") || "") ? new URLSearchParams(location.search).get("seat") : "";
+  var ME_KEY = seat ? "huddle.me." + seat : "huddle.me";
 
   function screen(id) {
     ["#pl-join", "#pl-app"].forEach(function (sel) { $(sel).hidden = sel !== id; });
@@ -26,10 +29,10 @@
 
   /* ---- Joining -------------------------------------------------------------------------------- */
   function join(code, name) {
-    var saved = HU.store.get("sessionStorage", "huddle.me");
+    var saved = HU.store.get("sessionStorage", ME_KEY);
     var pid = saved && saved.code === code ? saved.pid : HU.randomId(20);
     me = { code: code, pid: pid, name: name };
-    HU.store.set("sessionStorage", "huddle.me", me);
+    HU.store.set("sessionStorage", ME_KEY, me);
     screen("#pl-app");
     paint({ phase: "connecting" });
     var url = HU.relayBase + "/room/" + code + "?role=player&pid=" + encodeURIComponent(pid);
@@ -41,7 +44,7 @@
         else if (closeCode === 4005) paint({ phase: "full" });
         else if (closeCode === 1000) paint({ phase: "closed" });
         else paint({ phase: "lost" });
-        HU.store.remove("sessionStorage", "huddle.me");
+        HU.store.remove("sessionStorage", ME_KEY);
       },
       message: onMessage
     });
@@ -60,7 +63,7 @@
       if (hostUp) link.send({ t: "hi", name: me.name });
       return;
     }
-    if (msg.t === "closed") { paint({ phase: "closed" }); link.stop(); HU.store.remove("sessionStorage", "huddle.me"); return; }
+    if (msg.t === "closed") { paint({ phase: "closed" }); link.stop(); HU.store.remove("sessionStorage", ME_KEY); return; }
     if (msg.t === "error") return;
     if (msg.t === "view") { paint(msg); return; }
     if (msg.t === "flash") { flash(msg); return; }
@@ -230,7 +233,7 @@
     var codeBox = $("#pl-code"), nameBox = $("#pl-nick");
     var fromUrl = HU.cleanCode(new URLSearchParams(location.search).get("code"));
     if (fromUrl) codeBox.value = fromUrl;
-    var saved = HU.store.get("sessionStorage", "huddle.me");
+    var saved = HU.store.get("sessionStorage", ME_KEY);
     codeBox.addEventListener("input", function () {
       var clean = HU.cleanCode(codeBox.value);
       if (clean !== codeBox.value) codeBox.value = clean;

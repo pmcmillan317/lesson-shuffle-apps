@@ -22,3 +22,17 @@
 
 /style.css
   Cache-Control: public, max-age=3600, must-revalidate
+
+# The Huddle Up demo page shows the teacher and student pages side by side in frames.
+# Only this site may frame them; every other page stays unframeable.
+/huddle-up/host/*
+  ! X-Frame-Options
+  ! Content-Security-Policy
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; connect-src 'self' https://lessonshuffle.com https://cloudflareinsights.com wss://rooms.lessonshuffle.com; style-src 'self'; script-src 'self' https://static.cloudflareinsights.com; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'
+
+/join/*
+  ! X-Frame-Options
+  ! Content-Security-Policy
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; connect-src 'self' https://lessonshuffle.com https://cloudflareinsights.com wss://rooms.lessonshuffle.com; style-src 'self'; script-src 'self' https://static.cloudflareinsights.com; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'

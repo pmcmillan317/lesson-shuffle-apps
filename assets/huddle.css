@@ -3,16 +3,16 @@
    --p custom property, which the scripts set through the CSSOM (allowed by the CSP). */
 
 /* Team colours, in HU.TEAMS order. All light enough for --ink-on-suit text. */
-.team-0 { --team: #6ca9d8; }  /* Blue Waves */
-.team-1 { --team: #80c783; }  /* Green Sprouts */
-.team-2 { --team: #ffd54f; }  /* Gold Stars */
-.team-3 { --team: #e57373; }  /* Red Rockets */
-.team-4 { --team: #b39ddb; }  /* Purple Comets */
-.team-5 { --team: #ffb74d; }  /* Orange Suns */
-.team-6 { --team: #4db6ac; }  /* Teal Tides */
-.team-7 { --team: #f48fb1; }  /* Pink Sparks */
-.team-8 { --team: #b0bec5; }  /* Silver Moons */
-.team-9 { --team: #c5e1a5; }  /* Lime Lightning */
+.team-0 { --team: #6ca9d8; }  /* Media Center */
+.team-1 { --team: #80c783; }  /* Science Bench */
+.team-2 { --team: #ffd54f; }  /* Design Studio */
+.team-3 { --team: #e57373; }  /* Innovation Lab */
+.team-4 { --team: #b39ddb; }  /* Project Hub */
+.team-5 { --team: #ffb74d; }  /* Makerspace */
+.team-6 { --team: #4db6ac; }  /* Research Desk */
+.team-7 { --team: #f48fb1; }  /* Art Room */
+.team-8 { --team: #b0bec5; }  /* Archive Table */
+.team-9 { --team: #c5e1a5; }  /* Music Room */
 
 /* Buttons and rows set their own display, so make sure the hidden attribute still wins. */
 .hu-host [hidden], .hu-play [hidden] { display: none !important; }

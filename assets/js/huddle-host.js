@@ -232,8 +232,8 @@
     var heat = heatOf(ti);
     if (S.series && S.series.champion != null) {
       return S.series.champion === ti
-        ? { big: "Champions!", small: "The " + team.name + " win the playoffs." }
-        : { big: "Playoffs over", small: "The " + S.teams[S.series.champion].name + " are the champions." };
+        ? { big: "Champions!", small: team.name + " wins the playoffs." }
+        : { big: "Playoffs over", small: S.teams[S.series.champion].name + " is the champion." };
     }
     if (heat && heat.mode === "eleven") {
       return { big: team.done ? "You made it!" : "Time!", small: team.done ? "Your team finished in " + HU.clock(team.doneAt) + "." : "Your team reached " + team.score + "." };
@@ -242,7 +242,7 @@
       return { big: "Your team won!", small: S.series ? "You move on in the playoffs." : "Nice teamwork." };
     }
     if (heat && heat.winner != null) {
-      return { big: "Round over", small: "The " + S.teams[heat.winner].name + " got there first." };
+      return { big: "Round over", small: S.teams[heat.winner].name + " got there first." };
     }
     return { big: "Round over", small: "Eyes up front." };
   }
@@ -1200,15 +1200,15 @@
     var head = $("#hu-res-head"), sub = $("#hu-res-sub");
     var sr = S.series;
     if (sr && sr.champion != null) {
-      head.textContent = "The " + S.teams[sr.champion].name + " are the champions!";
+      head.textContent = S.teams[sr.champion].name + " is the champion!";
       sub.textContent = "That's the playoffs. Shuffle new teams to play again.";
     } else if (main.mode === "eleven") {
       var allDone = main.teams.every(function (i) { return S.teams[i].done; });
       head.textContent = allDone ? "Every team made it!" : "Time!";
       sub.textContent = "Round time " + HU.clock(elapsed()) + ". Try to beat your best time next round.";
     } else if (main.winner != null) {
-      head.textContent = "The " + S.teams[main.winner].name + " win!";
-      sub.textContent = sr ? "They move on. Next up: " + stageLabel(sr) + "." : "Round time " + HU.clock(elapsed()) + ".";
+      head.textContent = S.teams[main.winner].name + " wins!";
+      sub.textContent = sr ? "On to the next game. Next up: " + stageLabel(sr) + "." : "Round time " + HU.clock(elapsed()) + ".";
     } else {
       head.textContent = "Round over";
       sub.textContent = "";

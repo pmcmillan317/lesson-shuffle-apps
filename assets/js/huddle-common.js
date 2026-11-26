@@ -48,22 +48,30 @@
   };
 
   /* ---- Random student names (used when names are turned off, or a name box is left empty) ---- */
-  var ADJ = ["Swift", "Quiet", "Bright", "Clever", "Lucky", "Brave", "Calm", "Jolly", "Sunny", "Bold", "Witty", "Zippy",
-    "Cosmic", "Mighty", "Gentle", "Rapid", "Sparky", "Breezy", "Daring", "Fuzzy", "Nimble", "Plucky", "Snappy", "Steady"];
-  var NOUN = ["Comet", "Maple", "Pebble", "Rocket", "Cactus", "Pickle", "Waffle", "Meteor", "Acorn", "Canyon", "Glacier",
-    "Lantern", "Marble", "Noodle", "Pretzel", "Quasar", "Sprout", "Thunder", "Tulip", "Volcano", "Walnut", "Yeti", "Zephyr", "Biscuit"];
+  // A describing word and a classroom object, like "Brass Compass" (an idea from Patrick's own prototype).
+  var ADJ = ["Wooden", "Blue", "Brass", "Red", "Green", "Silver", "Spiral", "Clear", "Yellow", "Magnetic", "Amber", "Glass",
+    "Metal", "Cobalt", "Graphite", "Canvas", "Pocket", "Linen", "Copper", "Ivory", "Teal", "Slate", "Cedar", "Indigo",
+    "Steel", "Cork", "Emerald", "Quartz", "Crimson", "Maple", "Bronze", "Frosted", "Navy", "Onyx", "Sunny", "Sparkly"];
+  var NOUN = ["Ruler", "Pencil", "Compass", "Stapler", "Highlighter", "Paperclip", "Notebook", "Protractor", "Folder",
+    "Marker", "Eraser", "Timer", "Prism", "Clipboard", "Binder", "Stylus", "Backpack", "Globe", "Calculator", "Sketchbook",
+    "Index Card", "Sharpener", "Meterstick", "Bookmark", "Scissors", "Magnifier", "Stopwatch", "Atlas", "Pencase",
+    "Pendulum", "Beaker", "Portfolio", "Crayon", "Glue Stick", "Whiteboard", "Tape"];
   HU.randomName = function () {
-    return ADJ[HU.randomInt(ADJ.length)] + " " + NOUN[HU.randomInt(NOUN.length)];
+    // Names fit the 18-character name limit.
+    for (;;) {
+      var n = ADJ[HU.randomInt(ADJ.length)] + " " + NOUN[HU.randomInt(NOUN.length)];
+      if (n.length <= 18) return n;
+    }
   };
   // Keep names short and plain. The teacher can swap any name for a random one.
   HU.cleanName = function (s) {
     return String(s || "").replace(/[\u0000-\u001f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 18);
   };
 
-  /* ---- Teams: a colour and an animal, so students can find each other fast ------------------- */
+  /* ---- Teams: places around a school, each with its own colour, so students can find each other fast ---- */
   HU.TEAMS = [
-    "Blue Whales", "Green Frogs", "Gold Bees", "Red Foxes", "Purple Owls",
-    "Orange Tigers", "Teal Turtles", "Pink Flamingos", "Silver Wolves", "Lime Geckos"
+    "Media Center", "Science Bench", "Design Studio", "Innovation Lab", "Project Hub",
+    "Makerspace", "Research Desk", "Art Room", "Archive Table", "Music Room"
   ];
 
   /* ---- The ways to play ------------------------------------------------------------------------ */

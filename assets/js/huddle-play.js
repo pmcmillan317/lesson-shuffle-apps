@@ -139,7 +139,7 @@
   function paintTeam(body, v) {
     body.appendChild(h("div", { class: "pl-msg" },
       h("p", { class: "pl-eyebrow", text: v.heat || v.mode.title }),
-      h("h2", { text: "You're on the " + v.team.name + "!" }),
+      h("h2", { text: "You're on team " + v.team.name + "!" }),
       h("p", { text: v.mode.seat }),
       v.mates && v.mates.length ? h("p", { class: "pl-mates" }, "Your team: ", h("b", { text: v.mates.join(", ") })) : h("p", { text: "You're playing on your own this round." }),
       h("p", { class: "pl-rule", text: v.mode.rule }),

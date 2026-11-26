@@ -76,7 +76,7 @@ await host.click("#hu-collect");
 
 await host.click("#hu-start");
 await host.waitForSelector("#hu-team-grid li");
-await kids[0].waitForSelector("text=You're on the");
+await kids[0].waitForSelector("text=You're on team");
 await host.screenshot({ path: join(SHOTS, "3-teams.png"), fullPage: true });
 await kids[0].screenshot({ path: join(SHOTS, "3-kid-team.png") });
 await host.click("#hu-go");

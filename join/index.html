@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join Huddle Up</title>
+<meta name="description" content="Join a Huddle Up game with the room code from your teacher. No account needed.">
+<link rel="canonical" href="https://apps.lessonshuffle.com/join/">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbfcf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141b20" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/assets/huddle.css">
+<!-- Students' page: no page counter, no outside links, nothing saved. -->
+<script src="/assets/js/huddle-common.js" defer></script>
+<script src="/assets/js/huddle-play.js" defer></script>
+</head>
+<body class="hu-play">
+<main id="main" class="pl-main">
+  <p id="pl-nojs" class="hu-nojs">Huddle Up needs JavaScript turned on to play.</p>
+
+  <section id="pl-join" class="pl-join" aria-labelledby="pl-join-h" hidden>
+    <img class="pl-logo" src="/assets/brand/icon.svg" alt="" width="430" height="430">
+    <h1 id="pl-join-h" class="hu-h1">Huddle Up</h1>
+    <form id="pl-form" class="pl-form" novalidate>
+      <label for="pl-code">Room code</label>
+      <input id="pl-code" class="pl-code-box" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="8" placeholder="ABC123" aria-describedby="pl-err">
+      <label for="pl-nick">Your nickname</label>
+      <div class="pl-nick-row">
+        <input id="pl-nick" maxlength="18" autocomplete="off" spellcheck="false" aria-describedby="pl-nick-help">
+        <button id="pl-dice" class="btn btn-ghost btn-sm" type="button">Pick one for me</button>
+      </div>
+      <p id="pl-nick-help" class="pl-dim">A nickname or your first name only. It is never saved.</p>
+      <p id="pl-err" class="pl-err" role="alert"></p>
+      <button class="btn btn-main hu-big" type="submit">Join</button>
+    </form>
+  </section>
+
+  <section id="pl-app" class="pl-app" aria-live="polite" hidden>
+    <div id="pl-top" class="pl-top" hidden>
+      <p class="pl-team-name" id="pl-team"></p>
+      <p class="pl-me" id="pl-name"></p>
+    </div>
+    <div id="pl-progress" class="pl-progress" role="progressbar" aria-label="Your team's progress" aria-valuemin="0" hidden>
+      <span class="pl-track"><span id="pl-fill" class="hu-fill"></span></span>
+      <span id="pl-score" class="pl-score"></span>
+    </div>
+    <p id="pl-status" class="hu-conn" role="status" hidden></p>
+    <div id="pl-body" class="pl-body"></div>
+    <div id="pl-flash" class="pl-flash" role="status" hidden></div>
+  </section>
+</main>
+</body>
+</html>

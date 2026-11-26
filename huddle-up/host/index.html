@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Host a game of Huddle Up</title>
+<meta name="description" content="Start a Huddle Up team review game. Paste your terms, pick a way to play, and students join with a room code. No student accounts.">
+<link rel="canonical" href="https://apps.lessonshuffle.com/huddle-up/host/">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbfcf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141b20" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/days-one-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/rubik-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/assets/huddle.css">
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/vendor/qrcode.js" defer></script>
+<script src="/assets/js/huddle-common.js" defer></script>
+<script src="/assets/js/huddle-host.js" defer></script>
+</head>
+<body class="hu-host">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/huddle-up/" aria-label="Huddle Up help page">
+      <picture class="logo-h"><source media="(prefers-color-scheme: dark)" srcset="/assets/brand/logo-horizontal-dark.svg"><img src="/assets/brand/logo-horizontal-light.svg" alt="" width="920" height="280"></picture>
+      <img class="logo-i" src="/assets/brand/icon.svg" alt="" width="430" height="430">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-inline hu-nav">
+        <li><a href="/huddle-up/" target="_blank" rel="noopener">How it works<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="hu-main">
+  <p id="hu-nojs" class="hu-nojs wrap">Huddle Up needs JavaScript turned on to host a game.</p>
+  <p id="hu-conn" class="hu-conn" role="status" hidden></p>
+
+  <div id="hu-app" hidden>
+  <!-- 1. Setup -->
+  <section id="hu-setup" class="wrap hu-setup" aria-labelledby="hu-setup-h">
+    <h1 id="hu-setup-h" class="hu-h1">Huddle Up</h1>
+    <p class="hu-lede">A team review game where nobody can win alone. Paste your terms, pick a way to play, and open a room.</p>
+    <form id="hu-setup-form" class="hu-steps" novalidate>
+      <fieldset class="hu-card">
+        <legend><span class="hu-num">1</span> Your terms</legend>
+        <label for="hu-title">Name this list <span class="hu-dim">(optional)</span></label>
+        <input id="hu-title" type="text" maxlength="80" autocomplete="off" placeholder="Unit 4 vocabulary">
+        <label for="hu-terms">Terms and matches</label>
+        <p class="hu-help" id="hu-terms-help">One pair on each line. Put a tab, a comma, a colon or a dash between the term and its match. A list copied from a spreadsheet, or exported from most flashcard tools, works as it is.</p>
+        <textarea id="hu-terms" rows="9" spellcheck="false" aria-describedby="hu-terms-help hu-parse" placeholder="photosynthesis, how plants turn light into food&#10;mitochondria, the part of the cell that makes energy"></textarea>
+        <p id="hu-parse" class="hu-parse" aria-live="polite"></p>
+        <ul id="hu-preview" class="hu-preview" role="list"></ul>
+        <div class="hu-row">
+          <label class="btn btn-ghost btn-sm hu-file">Import a file<input id="hu-file" type="file" accept=".txt,.csv,.tsv,text/plain,text/csv"></label>
+          <button id="hu-flip" class="btn btn-ghost btn-sm" type="button">Swap the columns</button>
+          <button id="hu-sample" class="btn btn-ghost btn-sm" type="button">Try a sample list</button>
+          <button id="hu-clear" class="btn btn-ghost btn-sm" type="button">Clear</button>
+          <button id="hu-pics-toggle" class="btn btn-ghost btn-sm" type="button" aria-expanded="false" aria-controls="hu-pics">Add pictures</button>
+        </div>
+        <div id="hu-pics" class="hu-pics" hidden>
+          <p class="hu-help">Add a picture to any match. Students see it with the meaning, so it helps with science diagrams, maps, art and early readers. Pictures are shrunk and kept in this browser, and only go to students' screens during the game.</p>
+          <ul id="hu-pics-list" class="hu-pics-list" role="list"></ul>
+          <p id="hu-pics-note" class="hu-dim" role="status"></p>
+        </div>
+        <div class="hu-row">
+          <button id="hu-save" class="btn btn-ghost btn-sm" type="button">Save this list in this browser</button>
+          <button id="hu-share" class="btn btn-ghost btn-sm" type="button">Copy a share link</button>
+          <span id="hu-save-note" class="hu-dim" role="status"></span>
+        </div>
+        <div id="hu-saved" class="hu-saved" hidden>
+          <p class="hu-label">Your saved lists</p>
+          <ul id="hu-saved-list" role="list"></ul>
+        </div>
+      </fieldset>
+
+      <fieldset class="hu-card">
+        <legend><span class="hu-num">2</span> Pick a way to play</legend>
+        <div class="hu-modes">
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="classic" checked><span><b>Team Race</b> Teams sit together. First team to the finish wins.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="eleven"><span><b>Eleven</b> Every team keeps playing until it reaches eleven, so no team gets left behind. Time it and beat it.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="cacophony"><span><b>Cacophony</b> Students stay in their seats and call out across the room to their teammates. Loud, and a lot of fun.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="silent"><span><b>Silent</b> Not a word. Teams plan hand signals first, then play in silence.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="relay"><span><b>Relay</b> Team devices sit side by side. One runner at a time checks every screen, makes the match, then tags the next runner.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="tagteam"><span><b>Tag Team</b> Silent. Sitters face two devices with heads down. Standers tap a shoulder, left or right, to point to the answer.</span></label>
+          <label class="hu-mode"><input type="radio" name="hu-mode" value="playoffs"><span><b>Playoffs</b> Each game's winner moves on and sits out. The field halves until two teams meet in the final. Waiting teams play a consolation game.</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="hu-card">
+        <legend><span class="hu-num">3</span> Settings</legend>
+        <div class="hu-grid">
+          <div id="hu-target-row">
+            <label for="hu-target">Matches to win</label>
+            <select id="hu-target"><option>6</option><option>8</option><option>10</option><option selected>12</option><option>15</option><option>20</option></select>
+          </div>
+          <p id="hu-eleven-note" class="hu-help" hidden>Eleven always plays to 11.</p>
+          <div>
+            <label for="hu-teamcount">Teams</label>
+            <select id="hu-teamcount"><option value="0" selected>About 3 per team</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>
+          </div>
+          <div>
+            <label for="hu-ask">Students see</label>
+            <select id="hu-ask"><option value="def" selected>The meaning, and find the term</option><option value="term">The term, and find the meaning</option><option value="mix">A mix of both</option></select>
+          </div>
+          <div>
+            <label for="hu-penalty">A wrong answer</label>
+            <select id="hu-penalty"><option value="point" selected>Costs the team a point</option><option value="zero">Sends the team back to zero</option><option value="none">Costs nothing</option></select>
+          </div>
+          <div>
+            <label for="hu-names">Student names</label>
+            <select id="hu-names"><option value="typed" selected>Students type a nickname or first name</option><option value="random">Give everyone a random name</option></select>
+          </div>
+          <div id="hu-pstyle-row" hidden>
+            <label for="hu-pstyle">Style for the first playoff game</label>
+            <select id="hu-pstyle"><option value="classic">Team Race</option><option value="cacophony">Cacophony</option><option value="silent">Silent</option><option value="relay">Relay</option><option value="tagteam">Tag Team</option></select>
+          </div>
+          <div id="hu-shuffle-row" class="hu-check">
+            <input id="hu-shuffle" type="checkbox" checked>
+            <label for="hu-shuffle">Shuffle teams every round</label>
+          </div>
+        </div>
+      </fieldset>
+      <div class="hu-row hu-go-row">
+        <button id="hu-open" class="btn btn-main hu-big" type="submit" disabled>Open a room</button>
+        <p class="hu-dim">No student accounts. Nothing is saved about your students.</p>
+      </div>
+    </form>
+  </section>
+
+  <!-- 2. Lobby -->
+  <section id="hu-lobby" class="wrap hu-lobby" aria-labelledby="hu-lobby-h" hidden>
+    <div class="hu-join-card">
+      <div>
+        <h1 id="hu-lobby-h" class="hu-join-line">Go to <b>apps.lessonshuffle.com/join</b></h1>
+        <p class="hu-join-sub">and type this code</p>
+        <p id="hu-code" class="hu-code"></p>
+      </div>
+      <div id="hu-qr" class="hu-qr"></div>
+    </div>
+    <p id="hu-lobby-mode" class="hu-mode-line"></p>
+    <div class="hu-lobby-grid">
+      <div class="hu-card">
+        <h2 class="hu-h2">Players <span id="hu-count" class="hu-pill"></span></h2>
+        <ul id="hu-players" class="hu-players" role="list" aria-live="polite"></ul>
+      </div>
+      <div class="hu-card">
+        <h2 class="hu-h2">Students write the set</h2>
+        <p class="hu-help">Let students send in terms of their own. You choose which ones to keep before you play.</p>
+        <button id="hu-collect" class="btn btn-ghost btn-sm" type="button" aria-pressed="false">Students write the set</button>
+        <div id="hu-subs-wrap" hidden>
+          <p id="hu-subs-empty" class="hu-dim">Nothing yet. Students will see a form on their screens.</p>
+          <ul id="hu-subs" class="hu-subs" role="list" aria-live="polite"></ul>
+          <button id="hu-keep-all" class="btn btn-ghost btn-sm" type="button" hidden>Keep them all</button>
+        </div>
+      </div>
+    </div>
+    <div class="hu-row hu-go-row">
+      <button id="hu-start" class="btn btn-main hu-big" type="button" disabled>Make teams</button>
+      <p id="hu-start-note" class="hu-dim"></p>
+    </div>
+    <div class="hu-row">
+      <button id="hu-edit" class="btn btn-ghost btn-sm" type="button">Change the terms or the way to play</button>
+      <button class="btn btn-ghost btn-sm hu-mute" type="button" aria-pressed="true">Sound on</button>
+      <button class="btn btn-ghost btn-sm hu-close" type="button">End and close the room</button>
+    </div>
+  </section>
+
+  <!-- 3. Teams -->
+  <section id="hu-teams" class="wrap hu-teams" aria-labelledby="hu-teams-mode" hidden>
+    <h1 id="hu-teams-mode" class="hu-h1"></h1>
+    <p id="hu-teams-rule" class="hu-lede"></p>
+    <div id="hu-plan" class="hu-plan" hidden>
+      <button id="hu-plan-start" class="btn btn-yellow btn-sm" type="button">Start 2 minutes of planning time</button>
+      <span id="hu-plan-clock" class="hu-plan-clock" role="timer"></span>
+    </div>
+    <ul id="hu-team-grid" class="hu-team-grid" role="list"></ul>
+    <div class="hu-row hu-go-row">
+      <button id="hu-go" class="btn btn-main hu-big" type="button">Start the round</button>
+      <button id="hu-reshuffle" class="btn btn-ghost" type="button">Shuffle the teams</button>
+    </div>
+    <div class="hu-row">
+      <button id="hu-teams-back" class="btn btn-ghost btn-sm" type="button">Back to the room</button>
+    </div>
+  </section>
+
+  <!-- 4. The game board -->
+  <section id="hu-game" class="wrap hu-game" aria-labelledby="hu-game-mode" hidden>
+    <div class="hu-game-head">
+      <div>
+        <h1 id="hu-game-mode" class="hu-h2"></h1>
+        <p id="hu-game-rule" class="hu-dim"></p>
+      </div>
+      <p id="hu-clock" class="hu-clock" role="timer" aria-label="Round time"></p>
+    </div>
+    <p id="hu-paused" class="hu-paused" hidden>Paused. Eyes up front.</p>
+    <div id="hu-board" class="hu-board"></div>
+    <div class="hu-row">
+      <button id="hu-pause" class="btn btn-ghost btn-sm" type="button">Pause</button>
+      <button id="hu-end" class="btn btn-ghost btn-sm" type="button">End the round</button>
+      <button class="btn btn-ghost btn-sm hu-mute" type="button" aria-pressed="true">Sound on</button>
+    </div>
+  </section>
+
+  <!-- 5. Results -->
+  <section id="hu-results" class="wrap hu-results" aria-labelledby="hu-res-head" hidden>
+    <h1 id="hu-res-head" class="hu-h1"></h1>
+    <p id="hu-res-sub" class="hu-lede"></p>
+    <ol id="hu-res-teams" class="hu-res-teams"></ol>
+    <div id="hu-tough-wrap" class="hu-card" hidden>
+      <h2 class="hu-h2">Matches to go over</h2>
+      <p class="hu-help">The matches teams missed most this round. Only you see this, and it shows no names.</p>
+      <ul id="hu-tough" class="hu-preview" role="list"></ul>
+    </div>
+    <div class="hu-row hu-go-row">
+      <span id="hu-pstyle-next-row" class="hu-inline" hidden>
+        <label for="hu-pstyle-next">Next game style</label>
+        <select id="hu-pstyle-next"><option value="classic">Team Race</option><option value="cacophony">Cacophony</option><option value="silent">Silent</option><option value="relay">Relay</option><option value="tagteam">Tag Team</option></select>
+      </span>
+      <button id="hu-next-game" class="btn btn-main hu-big" type="button" hidden>Next playoff game</button>
+      <button id="hu-again" class="btn btn-main hu-big" type="button">Shuffle teams and play again</button>
+      <button id="hu-same" class="btn btn-ghost" type="button">Same teams</button>
+    </div>
+    <div class="hu-row">
+      <button id="hu-change" class="btn btn-ghost btn-sm" type="button">Change the terms or the way to play</button>
+      <button class="btn btn-ghost btn-sm hu-close" type="button">End and close the room</button>
+    </div>
+  </section>
+  </div>
+</main>
+</body>
+</html>

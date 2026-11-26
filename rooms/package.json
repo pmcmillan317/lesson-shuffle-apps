@@ -1,0 +1,16 @@
+{
+  "name": "lesson-shuffle-rooms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tiny privacy-first WebSocket relay for Lesson Shuffle classroom games",
+  "scripts": {
+    "dev": "wrangler dev --port 8790 --local-upstream localhost:8790",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/rooms.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.168.0",
+    "ws": "^8.18.3"
+  }
+}

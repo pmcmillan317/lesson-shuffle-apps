@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huddle Up demo</title>
+<meta name="description" content="Try Huddle Up on one screen: the teacher's board and a few student phones side by side.">
+<link rel="canonical" href="https://apps.lessonshuffle.com/huddle-up/demo/">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbfcf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141b20" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/assets/huddle.css">
+<script src="/assets/js/huddle-common.js" defer></script>
+<script src="/assets/js/huddle-demo.js" defer></script>
+</head>
+<body class="hu-demo">
+<main id="main" class="dm-main">
+  <div class="dm-bar">
+    <p class="dm-title"><b>Huddle Up demo</b> <span class="hu-dim">The teacher's screen on the left, students' phones on the right. Set up a game on the left and the phones join on their own.</span></p>
+    <div class="dm-controls">
+      <label for="dm-count">Students</label>
+      <select id="dm-count"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select>
+      <button id="dm-rejoin" class="btn btn-ghost btn-sm" type="button" disabled>Rejoin the phones</button>
+      <a class="btn btn-ghost btn-sm" href="/huddle-up/">Back to Huddle Up</a>
+    </div>
+  </div>
+  <p class="dm-narrow">The demo needs a wide screen. On a phone or small window, open the <a href="/huddle-up/host/">teacher page</a> here and join from other devices.</p>
+  <div class="dm-stage">
+    <div class="dm-host"><iframe id="dm-host" src="/huddle-up/host/" title="Teacher screen"></iframe></div>
+    <div class="dm-phones" id="dm-phones">
+      <p id="dm-wait" class="dm-wait">Open a room on the teacher screen and the students will join here.</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -3,16 +3,16 @@
    --p custom property, which the scripts set through the CSSOM (allowed by the CSP). */
 
 /* Team colours, in HU.TEAMS order. All light enough for --ink-on-suit text. */
-.team-0 { --team: #6ca9d8; }  /* Blue Whales */
-.team-1 { --team: #80c783; }  /* Green Frogs */
-.team-2 { --team: #ffd54f; }  /* Gold Bees */
-.team-3 { --team: #e57373; }  /* Red Foxes */
-.team-4 { --team: #b39ddb; }  /* Purple Owls */
-.team-5 { --team: #ffb74d; }  /* Orange Tigers */
-.team-6 { --team: #4db6ac; }  /* Teal Turtles */
-.team-7 { --team: #f48fb1; }  /* Pink Flamingos */
-.team-8 { --team: #b0bec5; }  /* Silver Wolves */
-.team-9 { --team: #c5e1a5; }  /* Lime Geckos */
+.team-0 { --team: #6ca9d8; }  /* Blue Waves */
+.team-1 { --team: #80c783; }  /* Green Sprouts */
+.team-2 { --team: #ffd54f; }  /* Gold Stars */
+.team-3 { --team: #e57373; }  /* Red Rockets */
+.team-4 { --team: #b39ddb; }  /* Purple Comets */
+.team-5 { --team: #ffb74d; }  /* Orange Suns */
+.team-6 { --team: #4db6ac; }  /* Teal Tides */
+.team-7 { --team: #f48fb1; }  /* Pink Sparks */
+.team-8 { --team: #b0bec5; }  /* Silver Moons */
+.team-9 { --team: #c5e1a5; }  /* Lime Lightning */
 
 /* Buttons and rows set their own display, so make sure the hidden attribute still wins. */
 .hu-host [hidden], .hu-play [hidden] { display: none !important; }

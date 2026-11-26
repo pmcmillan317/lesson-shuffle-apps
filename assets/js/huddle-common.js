@@ -60,10 +60,10 @@
     return String(s || "").replace(/[\u0000-\u001f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 18);
   };
 
-  /* ---- Teams: a colour and an animal, so students can find each other fast ------------------- */
+  /* ---- Teams: a colour and a word, so students can find each other fast ------------------- */
   HU.TEAMS = [
-    "Blue Whales", "Green Frogs", "Gold Bees", "Red Foxes", "Purple Owls",
-    "Orange Tigers", "Teal Turtles", "Pink Flamingos", "Silver Wolves", "Lime Geckos"
+    "Blue Waves", "Green Sprouts", "Gold Stars", "Red Rockets", "Purple Comets",
+    "Orange Suns", "Teal Tides", "Pink Sparks", "Silver Moons", "Lime Lightning"
   ];
 
   /* ---- The ways to play ------------------------------------------------------------------------ */
